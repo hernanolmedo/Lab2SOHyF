@@ -43,12 +43,12 @@ fgetParameters
 
 */
 
-char ** fgetMatrix(FILE * file, int width, int height){
+char ** fgetMatrix(FILE * file, int height, int width){
 	int i,j;
-	char ** matrix = (char**)malloc(sizeof(char*)*width);
-	for(i=0;i<width;i++){
-        matrix[i] = (char*)malloc(sizeof(char)*height);
-		for(j=0;j<height;j++){
+	char ** matrix = (char**)malloc(sizeof(char*)*(height));
+	for(i=0;i<height;i++){
+        matrix[i] = (char*)malloc(sizeof(char)*(width+1)); // Se reserva un espacio más por cada fila para almacenar los saltos de línea
+		for(j=0;j<=width;j++){
 			fscanf(file,"%c",&matrix[i][j]);
 		}
 	}
