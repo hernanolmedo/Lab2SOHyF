@@ -1,22 +1,16 @@
 #ifndef FUNCIONES_H_INCLUDED
 #define FUNCIONES_H_INCLUDED
 
-#include <time.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdlib>
-#include <pthread.h>
-#include "readFile.h"
-
-int posicionRandom(){
-  srand(time(NULL));
-  int r = rand()%7; 
+int randomPosition(){
+    srand(time(NULL));
+    int r = rand()%7;
+    return r;
 }
 
-void mostrarPantalla(int largo,int ancho){
+void printScreen(int height,int width,char **matrix){
     int i,j;
-    for(i=0;i<largo;i++){
-        for(j=0;j<=ancho;j++) printf("%c",matriz[i][j]);
+    for(i=0;i<height;i++){
+        for(j=0;j<=width;j++) printf("%c",matrix[i][j]);
     }
 }
 

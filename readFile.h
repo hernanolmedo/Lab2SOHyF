@@ -2,8 +2,8 @@
 #define READFILE_H_INCLUDED
 
 // Primero se declaran las funciones
-int * getParameters (FILE * filePointer);
-char ** fgetMatrix(FILE * file, int height, int width);
+int *getParameters (FILE *filePointer);
+char **fgetMatrix(FILE *file,int height,int width);
 
 // Ahora se implementan
 
@@ -18,8 +18,8 @@ fgetParameters
         para que luego sean almacenados en un arreglo de enteros. Este arreglo es lo que devuelve la función.
 */
 
-int * fgetParameters (FILE * file) {
-    int * parameters = (int*)malloc(sizeof(int)*5);
+int * fgetParameters (FILE *file) {
+    int *parameters = (int*)malloc(sizeof(int)*5);
     int i = 0;
     char comodin[10];
     for (i=0;i<5;i++) fscanf(file,"%d",&parameters[i]);
@@ -43,14 +43,12 @@ fgetParameters
 
 */
 
-char ** fgetMatrix(FILE * file, int height, int width){
+char **fgetMatrix(FILE * file,int height,int width){
 	int i,j;
-	char ** matrix = (char**)malloc(sizeof(char*)*(height));
+	char **matrix=(char**)malloc(sizeof(char*)*(height));
 	for(i=0;i<height;i++){
-        matrix[i] = (char*)malloc(sizeof(char)*(width+1)); // Se reserva un espacio más por cada fila para almacenar los saltos de línea
-		for(j=0;j<=width;j++){
-			fscanf(file,"%c",&matrix[i][j]);
-		}
+        matrix[i]=(char*)malloc(sizeof(char)*(width+1)); // Se reserva un espacio más por cada fila para almacenar los saltos de línea
+		for(j=0;j<=width;j++) fscanf(file,"%c",&matrix[i][j]);
 	}
 	return matrix;
 }
