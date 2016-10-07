@@ -22,6 +22,15 @@ int main(int argc, char *argv[]){
     //Creación de la barrera para manejar hebras durante el turno.
     pthread_barrier_init (&barrera, NULL, 3); // El 3er argumento representa el número de threads que deben realizar sus tareas.
 
+    //Creación de hebras
+    int zombies=parametros[2];
+    int people=parametros[3];
+    pthread_t zombieThreads[zombies];
+    pthread_t personThreads[people];
+    int i;
+    for(i=0;i<zombies;i++) pthread_create (&zombieThreads[i], NULL, zombie, NULL);
+    for(i=0;i<people;i++) pthread_create (&personThreads[i], NULL, person, NULL);
+
     /*
     Código por escribir...
     - Creación de los threads.
