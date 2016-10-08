@@ -49,7 +49,7 @@ int positionCheker(int posX,int posY,char **matrix){
 int gameOver(int height,int width,char **matrix){
     int i,j,countP=0,countZ=0;
     for(i=0;i<height;i++){
-        for(j=0;j<=width;j++){
+        for(j=0;j<width;j++){
             if(matrix[i][j]=='P') countP++;
             else if(matrix[i][j]=='Z'||matrix[i][j]=='d') countZ++;
         }
@@ -59,25 +59,39 @@ int gameOver(int height,int width,char **matrix){
 }
 
 //Verificación en orden N S E W NE NW SE SW
-void shoot(int posX,int posY,char **matrix){
+void shoot(int posX,int posY,char **matrix,int **infoMatrix){
 	int targetX,targetY;
-    if(matrix[targetY=posY-1][targetX=posX]=='Z')
-    else if(matrix[targetY=posY+1][targetX=posX]=='Z')
-    else if(matrix[targetY=posY][targetX=posX+1]=='Z')
-    else if(matrix[targetY=posY][targetX=posX-1]=='Z')
-    else if(matrix[targetY=posY-1][targetX=posX+1]=='Z')
-    else if(matrix[targetY=posY-1][targetX=posX-1]=='Z')
-    else if(matrix[targetY=posY+1][targetX=posX+1]=='Z')
-    else if(matrix[targetY=posY+1][targetX=posX-1]=='Z')
+    if(matrix[posY-1][posX]=='Z'){targetY=posY-1; targetX=posX;}
+    else if(matrix[posY+1][posX]=='Z'){targetY=posY-1; targetX=posX;}
+    else if(matrix[posY][posX+1]=='Z'){targetY=posY-1; targetX=posX;}
+    else if(matrix[posY][posX-1]=='Z'){targetY=posY-1; targetX=posX;}
+    else if(matrix[posY-1][posX+1]=='Z'){targetY=posY-1; targetX=posX;}
+    else if(matrix[posY-1][posX-1]=='Z'){targetY=posY-1; targetX=posX;}
+    else if(matrix[posY+1][posX+1]=='Z'){targetY=posY-1; targetX=posX;}
+    else if(matrix[posY+1][posX-1]=='Z'){targetY=posY-1; targetX=posX;}
     else return;
-	if(whoLives()==0) matrix[targetY][targetX]='z';
-	else matrix[posY][posX]='d';
+	if(whoLives()==0) infoMatrix[targetY][targetX]=1;
+	else infoMatrix[posY][posX]=1;
 }
 
-//void killZombie(){
+int dead(int posX,int posY){
+	if(infoMatrix[posY][posX]==0) return 1;
+	return 0;
+}
 
-
-//}
+void corpses(int height,int width,char **matrix,int **infoMatrix){
+    int i,j;
+    for(i=0;i<height;i++){
+        for(j=0;j<width;j++){
+        	if(infoMatrix[i][j]==1) infoMatrix[i][j]=2;
+            else if(infoMatrix[i][j]==2) infoMatrix[i][j]=3;
+            else if(infoMatrix[i][j]==3){
+            	matrix[i][j]='0';
+            	infoMatrix[i][j]=0;
+            }
+        }
+    }
+}
 
 
 #endif
