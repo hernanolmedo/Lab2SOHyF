@@ -7,6 +7,13 @@ int randomPosition(){
     return r;
 }
 
+int whoLives(){
+    srand(time(NULL));
+    int r = rand()%9;
+    if(r<3) return 0;
+    else return 1;
+}
+
 void printScreen(int height,int width,char **matrix){
     int i,j;
     for(i=0;i<height;i++){
@@ -30,7 +37,7 @@ void move(int posX,int posY,char **matrix){
         else if(number==7) result=positionCheker(newX=posX,newY=posY+1,matrix);
         else if(number==8) result=positionCheker(newX=posX+1,newY=posY+1,matrix);
     }
-    matrix[newY,newX]=matrix[posY][posX];
+    matrix[newY][newX]=matrix[posY][posX];
     matrix[posY][posX]='0';
 }
 
@@ -39,7 +46,7 @@ int positionCheker(int posX,int posY,char **matrix){
     return 0;
 }
 
-int gameOver(char **matrix){
+int gameOver(int height,int width,char **matrix){
     int i,j,countP=0,countZ=0;
     for(i=0;i<height;i++){
         for(j=0;j<=width;j++){
@@ -53,45 +60,24 @@ int gameOver(char **matrix){
 
 //Verificación en orden N S E W NE NW SE SW
 void shoot(int posX,int posY,char **matrix){
-    int i;
-    for(i=0;i<=3;i++){
-        if(matrix[posY-i][posX]=='X') break;
-        else if(matrix[posY-i][posX]=='Z')
-    }
-    for(i=0;i<=3;i++){
-        if(matrix[posY+i][posX]=='X') break;
-        else if(matrix[posY+i][posX]=='Z')
-    }
-    for(i=0;i<=3;i++){
-        if(matrix[posY][posX+i]=='X') break;
-        else if(matrix[posY][posX+i]=='Z')
-    }
-    for(i=0;i<=3;i++){
-        if(matrix[posY][posX-i]=='X') break;
-        else if(matrix[posY][posX-i]=='Z')
-    }
-    for(i=0;i<=3;i++){
-        if(matrix[posY-i][posX+i]=='X') break;
-        else if(matrix[posY-i][posX+i]=='Z')
-    }
-    for(i=0;i<=3;i++){
-        if(matrix[posY-i][posX-i]=='X') break;
-        else if(matrix[posY-i][posX-i]=='Z')
-    }
-    for(i=0;i<=3;i++){
-        if(matrix[posY+i][posX+i]=='X') break;
-        else if(matrix[posY+i][posX+i]=='Z')
-    }
-    for(i=0;i<=3;i++){
-        if(matrix[posY+i][posX-i]=='X') break;
-        else if(matrix[posY+i][posX-i]=='Z')
-    }
+	int targetX,targetY;
+    if(matrix[targetY=posY-1][targetX=posX]=='Z')
+    else if(matrix[targetY=posY+1][targetX=posX]=='Z')
+    else if(matrix[targetY=posY][targetX=posX+1]=='Z')
+    else if(matrix[targetY=posY][targetX=posX-1]=='Z')
+    else if(matrix[targetY=posY-1][targetX=posX+1]=='Z')
+    else if(matrix[targetY=posY-1][targetX=posX-1]=='Z')
+    else if(matrix[targetY=posY+1][targetX=posX+1]=='Z')
+    else if(matrix[targetY=posY+1][targetX=posX-1]=='Z')
+    else return;
+	if(whoLives()==0) matrix[targetY][targetX]='z';
+	else matrix[posY][posX]='d';
 }
 
-void killZombie(){
+//void killZombie(){
 
 
-}
+//}
 
 
 #endif
