@@ -44,7 +44,15 @@ E entry
 Tiempos cadáveres:
 
 persona 2 segundos
-zombie 1 segundo
+zombie 2 segundo
+
+
+
+Matriz de información:
+
+1 muerto
+2 cadaver 1 turno
+3 cadaver 2 turno
 
 
 
