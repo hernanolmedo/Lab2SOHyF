@@ -17,7 +17,7 @@ int main(int argc, char *argv[]){
     int ancho=parametros[0];
     int largo=parametros[1];
     char** matriz=fgetMatrix(archivo,largo,ancho); //Se crea la matriz con los datos del archivo de entrada.
-	  //printScreen(largo,ancho,matriz); //Se imprime la matriz.
+	  printScreen(largo,ancho,matriz); //Se imprime la matriz.
 
 	  int i,j; // Contadores para prop�sitos varios
 
