@@ -11,35 +11,44 @@ pthread_barrier_t barrera; // Se declara un objeto barrier (barrera).
 
 int main(int argc, char *argv[]){
 
-    //Lectura e impresión de la matriz (tablero de la simulación)
+    //Lectura e impresiï¿½n de la matriz (tablero de la simulaciï¿½n)
     FILE* archivo=fopen(argv[1],"r");
-    int* parametros=fgetParameters(archivo); //Se leen los parámetros desde el archivo de entrada.
+    int* parametros=fgetParameters(archivo); //Se leen los parï¿½metros desde el archivo de entrada.
     int ancho=parametros[0];
     int largo=parametros[1];
     char** matriz=fgetMatrix(archivo,largo,ancho); //Se crea la matriz con los datos del archivo de entrada.
-    printScreen(largo,ancho,matriz); //Se imprime la matriz.
+	  //printScreen(largo,ancho,matriz); //Se imprime la matriz.
 
-    //Creación de la barrera para manejar hebras durante el turno.
-    pthread_barrier_init (&barrera, NULL, 3); // El 3er argumento representa el número de threads que deben realizar sus tareas.
+	  int i,j; // Contadores para propï¿½sitos varios
 
-    //Creación de hebras
+	  // Se crea una matriz de igual tamaï¿½o que matriz para realizar verificaciones entre turnos durante la partida.
+	  int ** infoMatrix = (int**)malloc(sizeof(int*)*largo);
+	  for(i=0;i<ancho;i++) infoMatrix[i]=(int*)malloc(sizeof(int)*ancho);
+    for(i=0;i<largo;i++){
+		    for(j=0;j<ancho;j++) infoMatrix[i][j]=0;
+	  }
+
+    //Creaciï¿½n de hebras
     int zombies=parametros[2];
     int people=parametros[3];
+	  int threads = zombies + people + 1;
+
+    //Creaciï¿½n de la barrera para manejar hebras durante el turno.
+    pthread_barrier_init (&barrera, NULL, threads); // El 3er argumento representa el nï¿½mero de threads que deben realizar sus tareas.
     pthread_t zombieThreads[zombies];
     pthread_t personThreads[people];
-    int i;
     for(i=0;i<zombies;i++) pthread_create (&zombieThreads[i], NULL, zombie, NULL);
     for(i=0;i<people;i++) pthread_create (&personThreads[i], NULL, person, NULL);
 
     /*
-    Código por escribir...
-    - Creación de los threads.
-    - Posiblemente, la implementación del sistema de turnos.
+    Cï¿½digo por escribir...
+    - Creaciï¿½n de los threads.
+    - Posiblemente, la implementaciï¿½n del sistema de turnos.
     Nota: Se debe llevar la cuenta de los threads creados para poder usar barrier correctamente.
     */
 
     pthread_barrier_wait(&barrera);
-    // En este punto ya todas las hebras habrán terminado de hacer lo que tenían que hacer durante el turno.
+    // En este punto ya todas las hebras habrï¿½n terminado de hacer lo que tenï¿½an que hacer durante el turno.
 
     return 0;
 }
