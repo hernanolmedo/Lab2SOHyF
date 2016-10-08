@@ -1,0 +1,50 @@
+#######Convenciones#######
+
+Opciones movimiento persona:
+
+0 1 2
+3 4 5
+6 7 8
+
+
+Direcciones balas basado en la rosa de los vientos:
+
+	NW	N	NE
+
+	W	P	 E
+
+	WS	S	SE
+
+
+Coordenadas matriz:
+
+Considerando (posX,posY)
+
+(0,0) (1,0) (2,0)
+
+(0,1) (1,1) (2,1)
+
+(0,2) (1,2) (2,2) 
+
+
+
+Carácteres posibles matriz:
+
+P person
+Z zombie
+G gun
+X wall
+d dead
+z dead zombie
+E entry
+0 space
+
+
+
+Tiempos cadáveres:
+
+persona 2 segundos
+zombie 1 segundo
+
+
+
