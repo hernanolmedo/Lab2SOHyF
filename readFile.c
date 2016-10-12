@@ -1,3 +1,6 @@
+#include "person.h"
+#include "zombie.h"
+
 /*
 fgetParameters
     Argumentos
@@ -34,7 +37,7 @@ fgetParameters
 
 */
 
-char** fgetMatrix(FILE *file,int height,int width,person* peopleArray,zombie* zombieArray,int ammo){
+char** fgetMatrix(FILE *file,int height,int width,person *peopleArray,zombie *zombieArray,int ammo){
     int i,j;
     int indicePersonArray=0;
     int indiceZombieArray=0;
@@ -44,14 +47,16 @@ char** fgetMatrix(FILE *file,int height,int width,person* peopleArray,zombie* zo
 		    for(j=0;j<=width;j++){
             fscanf(file,"%c",&matrix[i][j]);
             if(matrix[i][j]=='P'){
-                personArray[indicePersonArray].posX=i;
-                personArray[indicePersonArray].posY=j;
+                personArray[indicePersonArray].posX=j;
+                personArray[indicePersonArray].posY=i;
                 personArray[indicePersonArray].ammo=ammo;
+                personArray[indicePersonArray].gun=0;
                 indicePersonArray++;
             }
             if(matrix[i][j]=='E'){
-                zombieArray[indiceZombieArray].posX=i;
-                zombieArray[indiceZombieArray].posY=j;
+                zombieArray[indiceZombieArray].posX=j;
+                zombieArray[indiceZombieArray].posY=i;
+                zombieArray[indiceZombieArray].activated=0;
                 indiceZombieArray++;
             }
         }

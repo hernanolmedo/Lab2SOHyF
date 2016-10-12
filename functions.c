@@ -56,7 +56,7 @@ int gameOver(int height,int width,char **matrix){
 }
 
 //Verificación en orden N S E W NE NW SE SW
-void shoot(int posX,int posY,char **matrix,int **infoMatrix){
+void shoot(int posX,int posY,char **matrix,int **infoMatrix,int* ammo){
 	int targetX,targetY;
     if(matrix[posY-1][posX]=='Z'){targetY=posY-1; targetX=posX;}
     else if(matrix[posY+1][posX]=='Z'){targetY=posY-1; targetX=posX;}
@@ -67,8 +67,11 @@ void shoot(int posX,int posY,char **matrix,int **infoMatrix){
     else if(matrix[posY+1][posX+1]=='Z'){targetY=posY-1; targetX=posX;}
     else if(matrix[posY+1][posX-1]=='Z'){targetY=posY-1; targetX=posX;}
     else return;
-	if(whoLives()==0) infoMatrix[targetY][targetX]=1;
-	else infoMatrix[posY][posX]=1;
+	  if(whoLives()==0){
+        infoMatrix[targetY][targetX]=1;
+        *ammo--;
+    }
+    else infoMatrix[posY][posX]=1;
 }
 
 int dead(int posX,int posY){

@@ -3,11 +3,11 @@
 
 typedef struct personStr{
     int posX,posY;
-    int gun=0;
+    int gun;
     int ammo;
 }person;
 
 extern pthread_barrier_t barrera;
-void* person(void* insPerson);
+void* personFunc(void* insPerson);
 
 #endif // PERSON_H_INCLUDED

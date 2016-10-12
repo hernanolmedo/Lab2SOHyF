@@ -24,7 +24,7 @@ int main(int argc, char *argv[]){
 	  int threads = zombies + people + 1;
     person peopleArray[people]; // Se crean arreglos en donde se almacenan estructuras person y zombie.
     zombie zombieArray[zombies+people];
-    matriz=fgetMatrix(archivo,largo,ancho,peopleArray,zombieArray,ammo); //Se crea la matriz con los datos del archivo de entrada.
+    matriz=fgetMatrix(archivo,largo,ancho,&peopleArray,&zombieArray,ammo); //Se crea la matriz con los datos del archivo de entrada.
 	  printScreen(largo,ancho,matriz); //Se imprime la matriz.
 
 	  int i,j; // Contadores para prop�sitos varios
@@ -41,8 +41,8 @@ int main(int argc, char *argv[]){
     pthread_barrier_init (&barrera, NULL, threads); // El 3er argumento representa el n�mero de threads que deben realizar sus tareas.
     pthread_t zombieThreads[zombies];
     pthread_t personThreads[people];
-    for(i=0;i<zombies;i++) pthread_create (&zombieThreads[i], NULL, zombie, zombieArray[i]);
-    for(i=0;i<people;i++) pthread_create (&personThreads[i], NULL, person, peopleArray[i]);
+    for(i=0;i<zombies;i++) pthread_create (&zombieThreads[i], NULL, zombieFunc, &zombieArray[i]);
+    for(i=0;i<people;i++) pthread_create (&personThreads[i], NULL, personFunc, &peopleArray[i]);
 
     /*
     C�digo por escribir...
