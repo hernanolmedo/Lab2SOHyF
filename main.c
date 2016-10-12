@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include "readFile.h"
-#include "funciones.h"
+#include "functions.h"
 #include "zombie.h"
 #include "person.h"
 

@@ -1,6 +1,3 @@
-#ifndef FUNCIONES_H_INCLUDED
-#define FUNCIONES_H_INCLUDED
-
 int randomPosition(){
     srand(time(NULL));
     int r = rand()%8;
@@ -92,6 +89,3 @@ void corpses(int height,int width,char **matrix,int **infoMatrix){
         }
     }
 }
-
-
-#endif
