@@ -8,6 +8,8 @@
 #include "person.h"
 
 pthread_barrier_t barrera; // Se declara un objeto barrier (barrera).
+char** matriz;
+int ** infoMatrix;
 
 int main(int argc, char *argv[]){
 
@@ -16,29 +18,31 @@ int main(int argc, char *argv[]){
     int* parametros=fgetParameters(archivo); //Se leen los par�metros desde el archivo de entrada.
     int ancho=parametros[0];
     int largo=parametros[1];
-    char** matriz=fgetMatrix(archivo,largo,ancho); //Se crea la matriz con los datos del archivo de entrada.
+    int zombies=parametros[2];
+    int people=parametros[3];
+    int ammo = parametros[4];
+	  int threads = zombies + people + 1;
+    person peopleArray[people]; // Se crean arreglos en donde se almacenan estructuras person y zombie.
+    zombie zombieArray[zombies+people];
+    matriz=fgetMatrix(archivo,largo,ancho,peopleArray,zombieArray,ammo); //Se crea la matriz con los datos del archivo de entrada.
 	  printScreen(largo,ancho,matriz); //Se imprime la matriz.
 
 	  int i,j; // Contadores para prop�sitos varios
 
 	  // Se crea una matriz de igual tama�o que matriz para realizar verificaciones entre turnos durante la partida.
-	  int ** infoMatrix = (int**)malloc(sizeof(int*)*largo);
+	  infoMatrix = (int**)malloc(sizeof(int*)*largo);
 	  for(i=0;i<ancho;i++) infoMatrix[i]=(int*)malloc(sizeof(int)*ancho);
     for(i=0;i<largo;i++){
 		    for(j=0;j<ancho;j++) infoMatrix[i][j]=0;
 	  }
 
     //Creaci�n de hebras
-    int zombies=parametros[2];
-    int people=parametros[3];
-	  int threads = zombies + people + 1;
-
     //Creaci�n de la barrera para manejar hebras durante el turno.
     pthread_barrier_init (&barrera, NULL, threads); // El 3er argumento representa el n�mero de threads que deben realizar sus tareas.
     pthread_t zombieThreads[zombies];
     pthread_t personThreads[people];
-    for(i=0;i<zombies;i++) pthread_create (&zombieThreads[i], NULL, zombie, NULL);
-    for(i=0;i<people;i++) pthread_create (&personThreads[i], NULL, person, NULL);
+    for(i=0;i<zombies;i++) pthread_create (&zombieThreads[i], NULL, zombie, zombieArray[i]);
+    for(i=0;i<people;i++) pthread_create (&personThreads[i], NULL, person, peopleArray[i]);
 
     /*
     C�digo por escribir...
