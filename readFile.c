@@ -1,6 +1,9 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "readFile.h"
 #include "person.h"
 #include "zombie.h"
-#include "readFile.h"
+
 
 /*
 fgetParameters
@@ -38,7 +41,7 @@ fgetParameters
 
 */
 
-char** fgetMatrix(FILE *file,int height,int width,void *peopleArray,void *zombieArray,int ammo){
+char** fgetMatrix(FILE *file,int height,int width,person *peopleArray,zombie *zombieArray,int ammo){
     int i,j;
     int indicePersonArray=0;
     int indiceZombieArray=0;
@@ -48,10 +51,10 @@ char** fgetMatrix(FILE *file,int height,int width,void *peopleArray,void *zombie
 		    for(j=0;j<=width;j++){
             fscanf(file,"%c",&matrix[i][j]);
             if(matrix[i][j]=='P'){
-                personArray[indicePersonArray].posX=j;
-                personArray[indicePersonArray].posY=i;
-                personArray[indicePersonArray].ammo=ammo;
-                personArray[indicePersonArray].gun=0;
+                peopleArray[indicePersonArray].posX=j;
+                peopleArray[indicePersonArray].posY=i;
+                peopleArray[indicePersonArray].ammo=ammo;
+                peopleArray[indicePersonArray].gun=0;
                 indicePersonArray++;
             }
             if(matrix[i][j]=='E'){
