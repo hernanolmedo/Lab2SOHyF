@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <pthread.h>
 #include "person.h"
 
 void* personFunc (void* insPerson){ // Puede ser que se decida usar "no_usado" despu�s. Cambiar el nombre en caso de que as� sea.
