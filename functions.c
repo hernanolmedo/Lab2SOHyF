@@ -1,3 +1,5 @@
+#include "functions.h"
+
 int randomPosition(){
     srand(time(NULL));
     int r = rand()%8;

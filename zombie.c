@@ -1,3 +1,5 @@
+#include "zombie.h"
+
 void* zombieFunc (void* insZombie){ // Puede ser que se decida usar "no_usado" después. Cambiar el nombre en caso de que así sea.
     zombie* zombiePointer=(zombie*)insZombie;
     while(){

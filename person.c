@@ -1,3 +1,5 @@
+#include "person.h"
+
 void* personFunc (void* insPerson){ // Puede ser que se decida usar "no_usado" despu�s. Cambiar el nombre en caso de que as� sea.
     person* personPointer=(person*)insPerson;
     while(infoMatrix[personPointer->posX][personPointer->posY]==0){ // Mientras la persona esta viva

@@ -1,5 +1,6 @@
 #include "person.h"
 #include "zombie.h"
+#include "readFile.h"
 
 /*
 fgetParameters
@@ -37,7 +38,7 @@ fgetParameters
 
 */
 
-char** fgetMatrix(FILE *file,int height,int width,person *peopleArray,zombie *zombieArray,int ammo){
+char** fgetMatrix(FILE *file,int height,int width,void *peopleArray,void *zombieArray,int ammo){
     int i,j;
     int indicePersonArray=0;
     int indiceZombieArray=0;
