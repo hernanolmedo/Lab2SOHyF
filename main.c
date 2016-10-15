@@ -21,10 +21,11 @@ int main(int argc, char *argv[]){
     int zombies=parametros[2];
     int people=parametros[3];
     int ammo = parametros[4];
-	int threads = zombies + people + 1;
+    int zombieArrayLenght=zombies+people;
+	  int threads = zombies + people + 1;
     person peopleArray[people]; // Se crean arreglos en donde se almacenan estructuras person y zombie.
-    zombie zombieArray[zombies+people];
-    matriz=fgetMatrix(archivo,largo,ancho,peopleArray,zombieArray,ammo); //Se crea la matriz con los datos del archivo de entrada.
+    zombie zombieArray[zombieArrayLenght];
+    matriz=fgetMatrix(archivo,largo,ancho,peopleArray,zombieArray,ammo,zombieArrayLenght); //Se crea la matriz con los datos del archivo de entrada.
 	  printScreen(largo,ancho,matriz); //Se imprime la matriz.
 
 	  int i,j; // Contadores para prop�sitos varios
