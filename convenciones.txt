@@ -18,13 +18,13 @@ Direcciones balas basado en la rosa de los vientos:
 
 Coordenadas matriz:
 
-Considerando (posX,posY)
+Considerando (posX,posY) // Escribir el código SIEMPRE considerando esto!!
 
 (0,0) (1,0) (2,0)
 
 (0,1) (1,1) (2,1)
 
-(0,2) (1,2) (2,2) 
+(0,2) (1,2) (2,2)
 
 
 
@@ -53,6 +53,3 @@ Matriz de información:
 1 muerto
 2 cadaver 1 turno
 3 cadaver 2 turno
-
-
-

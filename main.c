@@ -32,8 +32,8 @@ int main(int argc, char *argv[]){
 
 	  // Se crea una matriz de igual tama�o que matriz para realizar verificaciones entre turnos durante la partida.
 	  infoMatrix = (int**)malloc(sizeof(int*)*largo);
-	  for(i=0;i<ancho;i++) infoMatrix[i]=(int*)malloc(sizeof(int)*ancho);
     for(i=0;i<largo;i++){
+        infoMatrix[i]=(int*)malloc(sizeof(int)*ancho);
 		    for(j=0;j<ancho;j++) infoMatrix[i][j]=0;
 	  }
 
