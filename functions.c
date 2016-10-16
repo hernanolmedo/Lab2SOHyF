@@ -74,7 +74,7 @@ void shoot(int posX,int posY,char **matrix,int **infoMatrix,int* ammo){
     else return;
 	  if(whoLives()==0){
         infoMatrix[targetX][targetY]=1;
-        *ammo--;
+        (*ammo)--;
     }
     else infoMatrix[posX][posY]=1;
 }
