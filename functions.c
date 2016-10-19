@@ -57,8 +57,8 @@ int gameOver(int height,int width,char **matrix){
             else if(matrix[i][j]=='Z'||matrix[i][j]=='d') countZ++;
         }
     }
-    if(countP==0||countZ==0) return 1;
-    return 0;
+    if(countP==0||countZ==0) return 0;
+    return 1;
 }
 
 //Verificación en orden N S E W NE NW SE SW

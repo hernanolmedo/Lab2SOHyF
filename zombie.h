@@ -8,12 +8,15 @@
 typedef struct zombieStr{
     int posX;
     int posY;
-    int activated; //Para que empiece a moverse desde la entrada
+    int activated;
 }zombie;
 
 extern char** matriz;
 extern int ** infoMatrix;
+extern int threads;
 extern pthread_barrier_t barrera;
+extern pthread_barrier_t barrera2;
+extern pthread_mutex_t mutex;
 void* zombieFunc(void* insZombie);
 
 #endif // ZOMBIE_H_INCLUDED

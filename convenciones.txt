@@ -50,6 +50,8 @@ zombie 2 segundo
 
 Matriz de información:
 
+0 espacio disponible
 1 muerto
 2 cadaver 1 turno
 3 cadaver 2 turno
+

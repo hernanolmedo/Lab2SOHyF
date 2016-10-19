@@ -6,10 +6,16 @@
 
 void* zombieFunc (void* insZombie){ // Puede ser que se decida usar "no_usado" después. Cambiar el nombre en caso de que así sea.
     zombie* zombiePointer=(zombie*)insZombie;
-    while(matriz[zombiePointer->posX][zombiePointer->posY]!='z'){ // Mientras la persona esta viva
-        move(zombiePointer->posX,zombiePointer->posY,matriz);
-        pthread_barrier_wait (&barrera);
+    while(1){ // Mientras la persona esta viva
+		if(dead(zombiePointer->posX,zombiePointer->posY)){
+			pthread_mutex_lock(&mutex);
+		    move(zombiePointer->posX,zombiePointer->posY,matriz);
+			pthread_mutex_unlock(&mutex);
+		}
+	    pthread_barrier_wait (&barrera);
+		pthread_barrier_wait(&barrera2);
     }
+	threads--;
 	return 0;
     // En este punto ya todas las hebras habrán terminado de hacer lo que tengan que hacer durante el turno.
 }

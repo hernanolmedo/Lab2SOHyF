@@ -13,7 +13,10 @@ typedef struct personStr{
 
 extern char** matriz;
 extern int ** infoMatrix;
+extern int threads;
 extern pthread_barrier_t barrera;
+extern pthread_barrier_t barrera2;
+extern pthread_mutex_t mutex;
 void* personFunc(void* insPerson);
 
 #endif // PERSON_H_INCLUDED
