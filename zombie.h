@@ -8,7 +8,7 @@
 typedef struct zombieStr{
     int posX;
     int posY;
-    int activated;
+    int activated; //Para que empiece a moverse desde la entrada
 }zombie;
 
 extern char** matriz;
