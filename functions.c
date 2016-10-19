@@ -23,6 +23,7 @@ void printScreen(int height,int width,char **matrix){
             printf("%c",matrix[i][j]);
         }
     }
+	printf("\n");
 }
 
 void move(int posX,int posY,char **matrix){
