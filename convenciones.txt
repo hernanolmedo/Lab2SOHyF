@@ -55,3 +55,7 @@ Matriz de información:
 2 cadaver 1 turno
 3 cadaver 2 turno
 
+Activación zombies:
+
+1 activado
+0 desactivado

@@ -9,11 +9,13 @@ typedef struct zombieStr{
     int posX;
     int posY;
     int activated;
+    int numero;
 }zombie;
 
 extern char** matriz;
 extern int ** infoMatrix;
 extern int threads;
+extern int turno;
 extern pthread_barrier_t barrera;
 extern pthread_barrier_t barrera2;
 extern pthread_mutex_t mutex;

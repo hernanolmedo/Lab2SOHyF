@@ -46,6 +46,7 @@ char** fgetMatrix(FILE *file,int height,int width,person *peopleArray,zombie *zo
     int indicePersonArray=0;
     int indiceZombieArray=0;
     int condition=0;
+    int contador=0;
     char** matrix=(char**)malloc(sizeof(char*)*(height));
     for(i=0;i<height;i++){
         matrix[i]=(char*)malloc(sizeof(char)*(width+1)); // Se reserva un espacio m�s por cada fila para almacenar los saltos de l�nea
@@ -64,6 +65,8 @@ char** fgetMatrix(FILE *file,int height,int width,person *peopleArray,zombie *zo
                     zombieArray[indiceZombieArray].posX=i+1;
                     zombieArray[indiceZombieArray].posY=j;
                     zombieArray[indiceZombieArray].activated=0;
+                    zombieArray[indiceZombieArray].numero=contador;
+                    contador++;
                     indiceZombieArray++;
                 }
             }
