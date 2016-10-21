@@ -79,7 +79,7 @@ void shoot(int posX,int posY,char **matrix,int **infoMatrix,int* ammo){
     }
     else infoMatrix[posX][posY]=1;
 }
-
+//Si esta vivo retorna 1
 int dead(int posX,int posY){
 	if(infoMatrix[posX][posY]==0) return 1;
 	return 0;
