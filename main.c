@@ -54,10 +54,10 @@ int main(int argc, char *argv[]){
     - Creaci�n de los threads.
     - Posiblemente, la implementaci�n del sistema de turnos.
     Nota: Se debe llevar la cuenta de los threads creados para poder usar barrier correctamente.
-    */
+    */  
 	while(gameOver(largo,ancho,matriz)){
 		pthread_barrier_wait(&barrera2);
-		printScreen(largo,ancho,matriz); 
+		printScreen(largo,ancho,matriz);
     	pthread_barrier_wait(&barrera);
 		sleep(1);
     	// En este punto ya todas las hebras habr�n terminado de hacer lo que ten�an que hacer durante el turno.

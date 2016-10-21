@@ -61,8 +61,8 @@ char** fgetMatrix(FILE *file,int height,int width,person *peopleArray,zombie *zo
             if(matrix[i][j]=='E'&&condition==0){
                 condition++;
                 while(indiceZombieArray<zombieArrayLenght) {
-                    zombieArray[indiceZombieArray].posX=i;
-                    zombieArray[indiceZombieArray].posY=j+1;
+                    zombieArray[indiceZombieArray].posX=i+1;
+                    zombieArray[indiceZombieArray].posY=j;
                     zombieArray[indiceZombieArray].activated=0;
                     indiceZombieArray++;
                 }
