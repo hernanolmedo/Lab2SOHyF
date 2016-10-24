@@ -1,6 +1,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <ncurses.h>
 #include "functions.h"
 
 int randomPosition(){
@@ -16,16 +17,18 @@ int whoLives(){
 }
 
 void printScreen(int height,int width,char **matrix){
+    clear(); // Se limpia la pantalla ncurses
     int i,j;
     for(i=0;i<height;i++){
         for(j=0;j<=width;j++){
-            printf("%c",matrix[i][j]);
+            printw("%c",matrix[i][j]); // Imprime en pantalla ncurses
         }
     }
-	printf("\n");
+    printw("\n"); // IMprime en pantalla ncurses
+    refresh(); // Introduce las impresiones a la pantalla ncurses
 }
 
-void move(int *posrX,int *posrY,char **matrix){
+void changePosition(int *posrX,int *posrY,char **matrix){
     int number=0,result=0,newX,newY,posX=*posrX,posY=*posrY;
     while(result==0){
         number=randomPosition();

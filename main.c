@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <pthread.h>
+#include <ncurses.h>
 #include "readFile.h"
 #include "functions.h"
 #include "zombie.h"
@@ -53,11 +54,12 @@ int main(int argc, char *argv[]){
     person peopleArray[people]; // Se crean arreglos en donde se almacenan estructuras person y zombie.
     zombie zombieArray[zombieArrayLenght];
     matriz=fgetMatrix(archivo,largo,ancho,peopleArray,zombieArray,ammo,zombieArrayLenght); //Se crea la matriz con los datos del archivo de entrada.
-	  printScreen(largo,ancho,matriz); //Se imprime la matriz.
+    initscr(); // Se inicia el modo ncurses
+    printScreen(largo,ancho,matriz); //Se imprime la matriz.
 
 	  int i,j; // Contadores para prop�sitos varios
-		
-		
+
+
 	srand(time(NULL));
 	  // Se crea una matriz de igual tama�o que matriz para realizar verificaciones entre turnos durante la partida.
 	  infoMatrix = (int**)malloc(sizeof(int*)*largo);
@@ -81,12 +83,12 @@ int main(int argc, char *argv[]){
     - Posiblemente, la implementaci�n del sistema de turnos.
     Nota: Se debe llevar la cuenta de los threads creados para poder usar barrier correctamente.
     */
-	f(largo,ancho);
+	//f(largo,ancho);
 	pthread_barrier_wait(&barrera);
     while(gameOver(largo,ancho,matriz)){
         printScreen(largo,ancho,matriz);
-        pS(largo,ancho,infoMatrix);
-		f(largo,ancho);
+        //pS(largo,ancho,infoMatrix);
+		//f(largo,ancho);
         sleep(1);
         turno++;
         corpses(largo,ancho,matriz,infoMatrix);
