@@ -53,8 +53,8 @@ char** fgetMatrix(FILE *file,int height,int width,person *peopleArray,zombie *zo
 		    for(j=0;j<=width;j++){
             fscanf(file,"%c",&matrix[i][j]);
             if(matrix[i][j]=='P'){
-                peopleArray[indicePersonArray].posX=i;
-                peopleArray[indicePersonArray].posY=j;
+                peopleArray[indicePersonArray].posX=j;
+                peopleArray[indicePersonArray].posY=i;
                 peopleArray[indicePersonArray].ammo=ammo;
                 peopleArray[indicePersonArray].gun=0;
                 indicePersonArray++;
@@ -62,8 +62,8 @@ char** fgetMatrix(FILE *file,int height,int width,person *peopleArray,zombie *zo
             if(matrix[i][j]=='E'&&condition==0){
                 condition++;
                 while(indiceZombieArray<zombieArrayLenght) {
-                    zombieArray[indiceZombieArray].posX=i+1;
-                    zombieArray[indiceZombieArray].posY=j;
+                    zombieArray[indiceZombieArray].posX=j;
+                    zombieArray[indiceZombieArray].posY=i+1;
                     zombieArray[indiceZombieArray].activated=0;
                     zombieArray[indiceZombieArray].numero=contador;
                     contador++;

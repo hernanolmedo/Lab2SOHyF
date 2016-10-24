@@ -15,8 +15,19 @@ int ** infoMatrix;
 int threads;
 int turno;
 
-int main(int argc, char *argv[]){
+void f(int height,int width){
+    int i,j;
+	printf("\n\n");
+    for(i=0;i<height;i++){
+        for(j=0;j<width;j++){
+            printf("[%d][%d]  ",i,j);
+        }
+		printf("\n\n");
+    }
+	printf("\n\n");
+}
 
+int main(int argc, char *argv[]){
     //Lectura e impresi�n de la matriz (tablero de la simulaci�n)
     turno=0;
     FILE* archivo=fopen(argv[1],"r");
@@ -57,12 +68,15 @@ int main(int argc, char *argv[]){
     - Posiblemente, la implementaci�n del sistema de turnos.
     Nota: Se debe llevar la cuenta de los threads creados para poder usar barrier correctamente.
     */
+	f(largo,ancho);
+	pthread_barrier_wait(&barrera);
     while(gameOver(largo,ancho,matriz)){
-        pthread_barrier_wait(&barrera2);
         printScreen(largo,ancho,matriz);
-        pthread_barrier_wait(&barrera);
+		f(largo,ancho);
         sleep(1);
         turno++;
+        pthread_barrier_wait(&barrera2);
+        pthread_barrier_wait(&barrera);
     	// En este punto ya todas las hebras habr�n terminado de hacer lo que ten�an que hacer durante el turno.
     }
     return 0;

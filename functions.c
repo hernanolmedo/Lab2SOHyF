@@ -26,8 +26,8 @@ void printScreen(int height,int width,char **matrix){
 	printf("\n");
 }
 
-void move(int posX,int posY,char **matrix){
-    int number=0,result=0,newX,newY;
+void move(int *posrX,int *posrY,char **matrix){
+    int number=0,result=0,newX,newY,posX=*posrX,posY=*posrY;
     while(result==0){
         number=randomPosition();
         if(number==0) result=positionCheker(newX=posX-1,newY=posY-1,matrix);
@@ -40,12 +40,14 @@ void move(int posX,int posY,char **matrix){
         else if(number==7) result=positionCheker(newX=posX,newY=posY+1,matrix);
         else if(number==8) result=positionCheker(newX=posX+1,newY=posY+1,matrix);
     }
-    matrix[newX][newY]=matrix[posX][posY];
-    matrix[posX][posY]='0';
+    matrix[newY][newX]=matrix[posY][posX];
+    matrix[posY][posX]='0';
+	*posrX=newX;
+	*posrY=newY;
 }
 
 int positionCheker(int posX,int posY,char **matrix){
-    if(matrix[posX][posY]=='0') return 1;
+    if(matrix[posY][posX]=='0') return 1;
     return 0;
 }
 
@@ -64,24 +66,24 @@ int gameOver(int height,int width,char **matrix){
 //Verificación en orden N S E W NE NW SE SW
 void shoot(int posX,int posY,char **matrix,int **infoMatrix,int* ammo){
 	int targetX,targetY;
-    if(matrix[posX-1][posY]=='Z'){targetY=posY-1; targetX=posX;}
-    else if(matrix[posX+1][posY]=='Z'){targetY=posY-1; targetX=posX;}
-    else if(matrix[posX][posY+1]=='Z'){targetY=posY-1; targetX=posX;}
-    else if(matrix[posX][posY-1]=='Z'){targetY=posY-1; targetX=posX;}
-    else if(matrix[posX-1][posY+1]=='Z'){targetY=posY-1; targetX=posX;}
-    else if(matrix[posX-1][posY-1]=='Z'){targetY=posY-1; targetX=posX;}
-    else if(matrix[posX+1][posY+1]=='Z'){targetY=posY-1; targetX=posX;}
-    else if(matrix[posX+1][posY-1]=='Z'){targetY=posY-1; targetX=posX;}
+    if(matrix[posY-1][posX]=='Z'){targetY=posY-1; targetX=posX;}
+    else if(matrix[posY+1][posX]=='Z'){targetY=posY-1; targetX=posX;}
+    else if(matrix[posY][posX+1]=='Z'){targetY=posY-1; targetX=posX;}
+    else if(matrix[posY][posX-1]=='Z'){targetY=posY-1; targetX=posX;}
+    else if(matrix[posY-1][posX+1]=='Z'){targetY=posY-1; targetX=posX;}
+    else if(matrix[posY-1][posX-1]=='Z'){targetY=posY-1; targetX=posX;}
+    else if(matrix[posY+1][posX+1]=='Z'){targetY=posY-1; targetX=posX;}
+    else if(matrix[posY+1][posX-1]=='Z'){targetY=posY-1; targetX=posX;}
     else return;
 	  if(whoLives()==0){
-        infoMatrix[targetX][targetY]=1;
+        infoMatrix[targetY][targetX]=1;
         (*ammo)--;
     }
-    else infoMatrix[posX][posY]=1;
+    else infoMatrix[posY][posX]=1;
 }
-//Si esta vivo retorna 1
+
 int dead(int posX,int posY){
-	if(infoMatrix[posX][posY]==0) return 1;
+	if(infoMatrix[posY][posX]==0) return 1;
 	return 0;
 }
 

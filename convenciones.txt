@@ -59,3 +59,10 @@ Activación zombies:
 
 1 activado
 0 desactivado
+
+Parametros:
+
+1) columnas
+2) filas
+3) personas
+4) zombies
