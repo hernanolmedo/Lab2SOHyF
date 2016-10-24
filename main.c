@@ -96,5 +96,7 @@ int main(int argc, char *argv[]){
         pthread_barrier_wait(&barrera);
     	// En este punto ya todas las hebras habr�n terminado de hacer lo que ten�an que hacer durante el turno.
     }
+	printScreen(largo,ancho,matriz);
+	printw("GAME OVER");
     return 0;
 }
