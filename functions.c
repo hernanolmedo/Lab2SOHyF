@@ -10,7 +10,6 @@ int randomPosition(){
 }
 
 int whoLives(){
-    srand(time(NULL));
     int r = rand()%9;
     if(r<3) return 0;
     else return 1;
