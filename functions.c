@@ -4,7 +4,6 @@
 #include "functions.h"
 
 int randomPosition(){
-    srand(time(NULL));
     int r = rand()%8;
     return r;
 }
@@ -77,9 +76,11 @@ void shoot(int posX,int posY,char **matrix,int **infoMatrix,int* ammo){
     else return;
 	  if(whoLives()==0){
         infoMatrix[targetY][targetX]=1;
+        matrix[targetY][targetX]='z';
         (*ammo)--;
     }
     else infoMatrix[posY][posX]=1;
+    matrix[posY][posX]='d';
 }
 
 int dead(int posX,int posY){

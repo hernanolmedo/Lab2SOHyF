@@ -15,6 +15,17 @@ int ** infoMatrix;
 int threads;
 int turno;
 
+void pS(int height,int width,int **matrix){
+    int i,j;
+    for(i=0;i<height;i++){
+        for(j=0;j<=width;j++){
+            printf("%d",matrix[i][j]);
+        }
+        printf("\n");
+    }
+	printf("\n");
+}
+
 void f(int height,int width){
     int i,j;
 	printf("\n\n");
@@ -45,7 +56,9 @@ int main(int argc, char *argv[]){
 	  printScreen(largo,ancho,matriz); //Se imprime la matriz.
 
 	  int i,j; // Contadores para prop�sitos varios
-
+		
+		
+	srand(time(NULL));
 	  // Se crea una matriz de igual tama�o que matriz para realizar verificaciones entre turnos durante la partida.
 	  infoMatrix = (int**)malloc(sizeof(int*)*largo);
     for(i=0;i<largo;i++){
@@ -72,9 +85,11 @@ int main(int argc, char *argv[]){
 	pthread_barrier_wait(&barrera);
     while(gameOver(largo,ancho,matriz)){
         printScreen(largo,ancho,matriz);
+        pS(largo,ancho,infoMatrix);
 		f(largo,ancho);
         sleep(1);
         turno++;
+        corpses(largo,ancho,matriz,infoMatrix);
         pthread_barrier_wait(&barrera2);
         pthread_barrier_wait(&barrera);
     	// En este punto ya todas las hebras habr�n terminado de hacer lo que ten�an que hacer durante el turno.

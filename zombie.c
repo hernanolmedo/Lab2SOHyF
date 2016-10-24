@@ -10,7 +10,9 @@ void* zombieFunc (void* insZombie){ // Puede ser que se decida usar "no_usado" d
 		pthread_barrier_wait (&barrera);
 		pthread_barrier_wait(&barrera2);	
 	}
-	matriz[zombiePointer->posX][zombiePointer->posY]='Z';
+	matriz[zombiePointer->posY][zombiePointer->posX]='Z';
+	pthread_barrier_wait (&barrera);
+	pthread_barrier_wait(&barrera2);
     while(1){ // Mientras la persona esta viva
 		if(dead(zombiePointer->posX,zombiePointer->posY)){
 			pthread_mutex_lock(&mutex);
