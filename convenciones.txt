@@ -66,3 +66,14 @@ Parametros:
 2) filas
 3) personas
 4) zombies
+5) municiones
+
+Colores ncurses:
+
+1) Personas: piel
+2) Zombies: verde
+3) Muertos (personas): café
+4) Muertos (zombies): azul
+5) Murallas: gris
+6) Terreno: beige
+7) Armas: negro
