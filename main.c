@@ -55,12 +55,17 @@ int main(int argc, char *argv[]){
     zombie zombieArray[zombieArrayLenght];
     matriz=fgetMatrix(archivo,largo,ancho,peopleArray,zombieArray,ammo,zombieArrayLenght); //Se crea la matriz con los datos del archivo de entrada.
     initscr(); // Se inicia el modo ncurses
+    if(has_colors() == FALSE){
+        endwin();
+        printf("ERROR: Su terminal no soporta colores.\n");
+        return -1;
+    }
+    start_color(); // Se activa el modo color del terminal.
     printScreen(largo,ancho,matriz); //Se imprime la matriz.
 
 	  int i,j; // Contadores para prop�sitos varios
 
-
-	srand(time(NULL));
+	  srand(time(NULL)); // Se inicializa un número random que se usará para realizar cálculos en funciones de movimiento.
 	  // Se crea una matriz de igual tama�o que matriz para realizar verificaciones entre turnos durante la partida.
 	  infoMatrix = (int**)malloc(sizeof(int*)*largo);
     for(i=0;i<largo;i++){
