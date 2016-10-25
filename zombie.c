@@ -22,7 +22,7 @@ void* zombieFunc (void* insZombie){ // Puede ser que se decida usar "no_usado" d
     	zombiePointer->activated=1;
 			pthread_mutex_lock(&mutex);
 		if(dead(zombiePointer->posX,zombiePointer->posY)&&d==0){
-		    changePosition(&zombiePointer->posX,&zombiePointer->posY,matriz);
+		    changePosition(&zombiePointer->posX,&zombiePointer->posY,matriz,NULL,NULL);
 		}
 		else d=1;
 			pthread_mutex_unlock(&mutex);

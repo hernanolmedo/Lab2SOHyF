@@ -16,6 +16,7 @@ char** matriz;
 int ** infoMatrix;
 int threads;
 int turno;
+int ammoPerGun;
 
 void pS(int height,int width,int **matrix){
     int i,j;
@@ -49,11 +50,11 @@ int main(int argc, char *argv[]){
     int largo=parametros[1];
     int zombies=parametros[2];
     int people=parametros[3];
-    int ammo = parametros[4];
+    ammoPerGun = parametros[4];
     threads = zombies + people + 1;
     person peopleArray[people]; // Se crean arreglos en donde se almacenan estructuras person y zombie.
     zombie zombieArray[zombies];
-    matriz=fgetMatrix(archivo,largo,ancho,peopleArray,zombieArray,ammo,zombies); //Se crea la matriz con los datos del archivo de entrada.
+    matriz=fgetMatrix(archivo,largo,ancho,peopleArray,zombieArray,ammoPerGun,zombies); //Se crea la matriz con los datos del archivo de entrada.
     initscr(); // Se inicia el modo ncurses
     if(has_colors() == FALSE){
         endwin();
