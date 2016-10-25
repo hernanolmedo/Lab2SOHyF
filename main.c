@@ -64,6 +64,9 @@ int main(int argc, char *argv[]){
     start_color(); // Se activa el modo color del terminal.
     clock_t startTime = clock(); // Se guarda el tiempo de inicio de la partida
     printScreen(largo,ancho,matriz,startTime); //Se imprime la matriz.
+    printw("Personas: %d\n",people);
+    printw("Zombies: %d\n",zombies);
+    refresh();
 
 	  int i,j; // Contadores para prop�sitos varios
 
@@ -92,9 +95,12 @@ int main(int argc, char *argv[]){
     */
 	  //f(largo,ancho);
 	  pthread_barrier_wait(&barrera);
-    sleep(1); // Se hace una espera de 1 seg al iniciar la partida para apreciar el estado inicial de la pantalla    
+    sleep(1); // Se hace una espera de 1 seg al iniciar la partida para apreciar el estado inicial de la pantalla
     while(gameOver(largo,ancho,matriz)){
         printScreen(largo,ancho,matriz,startTime);
+        printw("Personas: %d\n",people);
+        printw("Zombies: %d\n",zombies);
+        refresh();
         //pS(largo,ancho,infoMatrix);
 		    //f(largo,ancho);
         sleep(1);
@@ -105,6 +111,12 @@ int main(int argc, char *argv[]){
     	  // En este punto ya todas las hebras habr�n terminado de hacer lo que ten�an que hacer durante el turno.
     }
 	  printScreen(largo,ancho,matriz,startTime);
-	  printw("GAME OVER");
+    printw("Personas: %d\n",people);
+    printw("Zombies: %d\n",zombies);
+	  printw("GAME OVER\n");
+    printw("Presione una tecla para salir...");
+    refresh();
+    getch();
+    endwin();
     return 0;
 }
