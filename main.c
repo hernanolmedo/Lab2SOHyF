@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <ncurses.h>
+#include <time.h>
 #include "readFile.h"
 #include "functions.h"
 #include "zombie.h"
@@ -24,19 +25,19 @@ void pS(int height,int width,int **matrix){
         }
         printf("\n");
     }
-	printf("\n");
+    printf("\n");
 }
 
 void f(int height,int width){
     int i,j;
-	printf("\n\n");
+	  printf("\n\n");
     for(i=0;i<height;i++){
         for(j=0;j<width;j++){
             printf("[%d][%d]  ",i,j);
         }
-		printf("\n\n");
+		    printf("\n\n");
     }
-	printf("\n\n");
+	  printf("\n\n");
 }
 
 int main(int argc, char *argv[]){
@@ -61,7 +62,8 @@ int main(int argc, char *argv[]){
         return -1;
     }
     start_color(); // Se activa el modo color del terminal.
-    printScreen(largo,ancho,matriz); //Se imprime la matriz.
+    clock_t startTime = clock(); // Se guarda el tiempo de inicio de la partida
+    printScreen(largo,ancho,matriz,startTime); //Se imprime la matriz.
 
 	  int i,j; // Contadores para prop�sitos varios
 
@@ -88,20 +90,20 @@ int main(int argc, char *argv[]){
     - Posiblemente, la implementaci�n del sistema de turnos.
     Nota: Se debe llevar la cuenta de los threads creados para poder usar barrier correctamente.
     */
-	//f(largo,ancho);
-	pthread_barrier_wait(&barrera);
+	  //f(largo,ancho);
+	  pthread_barrier_wait(&barrera);
     while(gameOver(largo,ancho,matriz)){
-        printScreen(largo,ancho,matriz);
+        printScreen(largo,ancho,matriz,startTime);
         //pS(largo,ancho,infoMatrix);
-		//f(largo,ancho);
+		    //f(largo,ancho);
         sleep(1);
         turno++;
         corpses(largo,ancho,matriz,infoMatrix);
         pthread_barrier_wait(&barrera2);
         pthread_barrier_wait(&barrera);
-    	// En este punto ya todas las hebras habr�n terminado de hacer lo que ten�an que hacer durante el turno.
+    	  // En este punto ya todas las hebras habr�n terminado de hacer lo que ten�an que hacer durante el turno.
     }
-	printScreen(largo,ancho,matriz);
-	printw("GAME OVER");
+	  printScreen(largo,ancho,matriz,startTime);
+	  printw("GAME OVER");
     return 0;
 }

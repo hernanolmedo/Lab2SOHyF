@@ -15,10 +15,12 @@ int whoLives(){
     else return 1;
 }
 
-void printScreen(int height,int width,char **matrix){
+void printScreen(int height,int width,char **matrix,clock_t startTime){
     clear(); // Se limpia la pantalla ncurses
     int i,j;
     char slot;
+    clock_t elapsedTime = clock()-startTime;
+    int timeSeconds = (int)(elapsedTime*1000/CLOCKS_PER_SEC); // Se termina de calcular el tiempo transcurrido en segundos.
     for(i=0;i<height;i++){
         for(j=0;j<=width;j++){
             slot=matrix[i][j];
@@ -81,6 +83,7 @@ void printScreen(int height,int width,char **matrix){
         }
     }
     printw("\n"); // Imprime en pantalla ncurses
+    printw("Tiempo transcurrido: %d\n",timeSeconds);
     refresh(); // Introduce las impresiones a la pantalla ncurses
 }
 
@@ -100,8 +103,8 @@ void changePosition(int *posrX,int *posrY,char **matrix){
     }
     matrix[newY][newX]=matrix[posY][posX];
     matrix[posY][posX]='0';
-	*posrX=newX;
-	*posrY=newY;
+	  *posrX=newX;
+	  *posrY=newY;
 }
 
 int positionCheker(int posX,int posY,char **matrix){
@@ -143,8 +146,8 @@ void shoot(int posX,int posY,char **matrix,int **infoMatrix,int* ammo){
 }
 
 int dead(int posX,int posY){
-	if(infoMatrix[posY][posX]==0) return 1;
-	return 0;
+	  if(infoMatrix[posY][posX]==0) return 1;
+	  return 0;
 }
 
 void corpses(int height,int width,char **matrix,int **infoMatrix){

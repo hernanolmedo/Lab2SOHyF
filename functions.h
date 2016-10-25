@@ -5,7 +5,7 @@ extern char** matriz;
 extern int ** infoMatrix;
 int randomPosition();
 int whoLives();
-void printScreen(int height,int width,char **matrix);
+void printScreen(int height,int width,char **matrix,clock_t startTime);
 void changePosition(int *posX,int *posY,char **matrix);
 int positionCheker(int posX,int posY,char **matrix);
 int gameOver(int height,int width,char **matrix);
