@@ -25,19 +25,19 @@ void pS(int height,int width,int **matrix){
         }
         printf("\n");
     }
-    printf("\n");
+	printf("\n");
 }
 
 void f(int height,int width){
     int i,j;
-	  printf("\n\n");
+	printf("\n\n");
     for(i=0;i<height;i++){
         for(j=0;j<width;j++){
             printf("[%d][%d]  ",i,j);
         }
-		    printf("\n\n");
+		printf("\n\n");
     }
-	  printf("\n\n");
+	printf("\n\n");
 }
 
 int main(int argc, char *argv[]){
@@ -50,11 +50,10 @@ int main(int argc, char *argv[]){
     int zombies=parametros[2];
     int people=parametros[3];
     int ammo = parametros[4];
-    int zombieArrayLenght=zombies+people;
     threads = zombies + people + 1;
     person peopleArray[people]; // Se crean arreglos en donde se almacenan estructuras person y zombie.
-    zombie zombieArray[zombieArrayLenght];
-    matriz=fgetMatrix(archivo,largo,ancho,peopleArray,zombieArray,ammo,zombieArrayLenght); //Se crea la matriz con los datos del archivo de entrada.
+    zombie zombieArray[zombies];
+    matriz=fgetMatrix(archivo,largo,ancho,peopleArray,zombieArray,ammo,zombies); //Se crea la matriz con los datos del archivo de entrada.
     initscr(); // Se inicia el modo ncurses
     if(has_colors() == FALSE){
         endwin();
@@ -70,7 +69,8 @@ int main(int argc, char *argv[]){
 
 	  int i,j; // Contadores para prop�sitos varios
 
-	  srand(time(NULL)); // Se inicializa un número random que se usará para realizar cálculos en funciones de movimiento.
+
+	srand(time(NULL));
 	  // Se crea una matriz de igual tama�o que matriz para realizar verificaciones entre turnos durante la partida.
 	  infoMatrix = (int**)malloc(sizeof(int*)*largo);
     for(i=0;i<largo;i++){
@@ -93,10 +93,10 @@ int main(int argc, char *argv[]){
     - Posiblemente, la implementaci�n del sistema de turnos.
     Nota: Se debe llevar la cuenta de los threads creados para poder usar barrier correctamente.
     */
-	  //f(largo,ancho);
+    //f(largo,ancho);
 	  pthread_barrier_wait(&barrera);
     sleep(1); // Se hace una espera de 1 seg al iniciar la partida para apreciar el estado inicial de la pantalla
-    while(gameOver(largo,ancho,matriz)){
+    while(gameOver(largo,ancho,matriz,zombies,zombieArray)){
         printScreen(largo,ancho,matriz,startTime);
         printw("Personas: %d\n",people);
         printw("Zombies: %d\n",zombies);
@@ -113,7 +113,7 @@ int main(int argc, char *argv[]){
 	  printScreen(largo,ancho,matriz,startTime);
     printw("Personas: %d\n",people);
     printw("Zombies: %d\n",zombies);
-	  printw("GAME OVER\n");
+	  printw("GAME OVER\n\n");
     printw("Presione una tecla para salir...");
     refresh();
     getch();

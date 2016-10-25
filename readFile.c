@@ -63,7 +63,7 @@ char** fgetMatrix(FILE *file,int height,int width,person *peopleArray,zombie *zo
                 condition++;
                 while(indiceZombieArray<zombieArrayLenght) {
                     zombieArray[indiceZombieArray].posX=j;
-                    zombieArray[indiceZombieArray].posY=i+1;
+                    zombieArray[indiceZombieArray].posY=i;
                     zombieArray[indiceZombieArray].activated=0;
                     zombieArray[indiceZombieArray].numero=contador;
                     contador++;

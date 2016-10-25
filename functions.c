@@ -5,12 +5,12 @@
 #include "functions.h"
 
 int randomPosition(){
-    int r = rand()%8;
+    int r = rand()%9;
     return r;
 }
 
 int whoLives(){
-    int r = rand()%9;
+    int r = rand()%10;
     if(r<3) return 0;
     else return 1;
 }
@@ -112,8 +112,26 @@ void changePosition(int *posrX,int *posrY,char **matrix){
     }
     matrix[newY][newX]=matrix[posY][posX];
     matrix[posY][posX]='0';
-	  *posrX=newX;
-	  *posrY=newY;
+	*posrX=newX;
+	*posrY=newY;
+}
+//entrada zombie
+int m(int *posrX,int *posrY,char **matrix){
+    int number=0,result=0,newX,newY,posX=*posrX,posY=*posrY;
+    while(result==0){
+        number=rand()%4;
+        if(number==0) {
+		result=1;
+		return 0;
+	}
+        else if(number==1) result=positionCheker(newX=posX-1,newY=posY+1,matrix);
+        else if(number==2) result=positionCheker(newX=posX,newY=posY+1,matrix);
+        else if(number==3) result=positionCheker(newX=posX+1,newY=posY+1,matrix);
+    }
+    matrix[newY][newX]='Z';
+	*posrX=newX;
+	*posrY=newY;
+	return 1;
 }
 
 int positionCheker(int posX,int posY,char **matrix){
@@ -121,15 +139,20 @@ int positionCheker(int posX,int posY,char **matrix){
     return 0;
 }
 
-int gameOver(int height,int width,char **matrix){
-    int i,j,countP=0,countZ=0;
+int gameOver(int height,int width,char **matrix,int nzombies,zombie *zombieArray){
+    int i,j,countP=0,countZ=0,act=0;
     for(i=0;i<height;i++){
         for(j=0;j<width;j++){
             if(matrix[i][j]=='P') countP++;
             else if(matrix[i][j]=='Z'||matrix[i][j]=='d') countZ++;
         }
     }
-    if(countP==0||countZ==0) return 0;
+    for(i=0;i<nzombies;i++){
+    	if(zombieArray[i].activated==0){
+    		act=1;
+    	}
+    }
+    if((act==0&&countZ==0)||countP==0) return 0;
     return 1;
 }
 
@@ -155,8 +178,8 @@ void shoot(int posX,int posY,char **matrix,int **infoMatrix,int* ammo){
 }
 
 int dead(int posX,int posY){
-	  if(infoMatrix[posY][posX]==0) return 1;
-	  return 0;
+	if(infoMatrix[posY][posX]==0) return 1;
+	return 0;
 }
 
 void corpses(int height,int width,char **matrix,int **infoMatrix){

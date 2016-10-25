@@ -6,13 +6,15 @@
 
 void* personFunc (void* insPerson){ // Puede ser que se decida usar "no_usado" despu�s. Cambiar el nombre en caso de que as� sea.
     person* personPointer=(person*)insPerson;
+    int d=0;
     while(1){ // Mientras la persona esta viva
-		if(dead(personPointer->posX,personPointer->posY)){
-			pthread_mutex_lock(&mutex);
+		pthread_mutex_lock(&mutex);
+		if(dead(personPointer->posX,personPointer->posY)&&d==0){
 		    changePosition(&personPointer->posX,&personPointer->posY,matriz);
 		    shoot(personPointer->posX,personPointer->posY,matriz,infoMatrix,&personPointer->ammo);
-			pthread_mutex_unlock(&mutex);
 		}
+		else d=1;
+		pthread_mutex_unlock(&mutex);
 	    pthread_barrier_wait (&barrera);
 		pthread_barrier_wait(&barrera2);
     }

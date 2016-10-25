@@ -67,24 +67,3 @@ Parametros:
 3) personas
 4) zombies
 5) municiones
-
-Colores ncurses:
-
-COLOR_BLACK
-COLOR_RED
-COLOR_GREEN
-COLOR_YELLOW
-COLOR_BLUE
-COLOR_MAGENTA
-COLOR_CYAN
-COLOR_WHITE
-
-Pares de colores: (foreground,background)
-
-1) Personas: (COLOR_MAGENTA,COLOR_YELLOW)
-2) Zombies: (COLOR_GREEN,COLOR_RED)
-3) Muertos (personas): (COLOR_MAGENTA,COLOR_RED)
-4) Muertos (zombies): (COLOR_GREEN,COLOR_BLUE)
-5) Murallas: (COLOR_BLACK,COLOR_WHITE)
-6) Terreno: (COLOR_WHITE,COLOR_BLACK)
-7) Armas: (COLOR_RED,COLOR_BLACK)
