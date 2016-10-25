@@ -19,8 +19,17 @@ void printScreen(int height,int width,char **matrix,clock_t startTime){
     clear(); // Se limpia la pantalla ncurses
     int i,j;
     char slot;
-    clock_t elapsedTime = clock()-startTime;
-    int timeSeconds = (int)(elapsedTime*1000/CLOCKS_PER_SEC); // Se termina de calcular el tiempo transcurrido en segundos.
+    char timeString[6];
+    struct tm timeStruct;
+    clock_t elapsedTime=clock()-startTime;
+    int timeSeconds=(int)(elapsedTime*1000/CLOCKS_PER_SEC); // Se termina de calcular el tiempo transcurrido en segundos.
+    int timeMinutes=(int)timeSeconds/60;
+    int remainingSeconds;
+    if(timeMinutes!=0) remainingSeconds=(int)timeSeconds%(timeMinutes*60);
+    else remainingSeconds=timeSeconds;
+    timeStruct.tm_sec=remainingSeconds;
+    timeStruct.tm_min=timeMinutes;
+    strftime(timeString,6,"%M:%S",&timeStruct);
     for(i=0;i<height;i++){
         for(j=0;j<=width;j++){
             slot=matrix[i][j];
@@ -83,7 +92,7 @@ void printScreen(int height,int width,char **matrix,clock_t startTime){
         }
     }
     printw("\n"); // Imprime en pantalla ncurses
-    printw("Tiempo transcurrido: %d\n",timeSeconds);
+    printw("Tiempo: %s\n",timeString);
     refresh(); // Introduce las impresiones a la pantalla ncurses
 }
 

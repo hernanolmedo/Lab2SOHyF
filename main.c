@@ -92,6 +92,7 @@ int main(int argc, char *argv[]){
     */
 	  //f(largo,ancho);
 	  pthread_barrier_wait(&barrera);
+    sleep(1); // Se hace una espera de 1 seg al iniciar la partida para apreciar el estado inicial de la pantalla    
     while(gameOver(largo,ancho,matriz)){
         printScreen(largo,ancho,matriz,startTime);
         //pS(largo,ancho,infoMatrix);
