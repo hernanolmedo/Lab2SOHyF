@@ -18,12 +18,69 @@ int whoLives(){
 void printScreen(int height,int width,char **matrix){
     clear(); // Se limpia la pantalla ncurses
     int i,j;
+    char slot;
     for(i=0;i<height;i++){
         for(j=0;j<=width;j++){
-            printw("%c",matrix[i][j]); // Imprime en pantalla ncurses
+            slot=matrix[i][j];
+            switch(slot) {
+                case 'P':
+                    init_pair(8,COLOR_MAGENTA,COLOR_YELLOW);
+                    attron(COLOR_PAIR(8));
+                    printw("%c",slot); // Imprime en pantalla ncurses
+                    attroff(COLOR_PAIR(8));
+                    break;
+                case 'Z':
+                    init_pair(1,COLOR_GREEN,COLOR_RED);
+                    attron(COLOR_PAIR(1));
+                    printw("%c",slot); // Imprime en pantalla ncurses
+                    attroff(COLOR_PAIR(1));
+                    break;
+                case 'G':
+                    init_pair(2,COLOR_RED,COLOR_CYAN);
+                    attron(COLOR_PAIR(2));
+                    printw("%c",slot); // Imprime en pantalla ncurses
+                    attroff(COLOR_PAIR(2));
+                    break;
+                case 'X':
+                    init_pair(3,COLOR_BLACK,COLOR_WHITE);
+                    attron(COLOR_PAIR(3));
+                    printw("%c",slot); // Imprime en pantalla ncurses
+                    attroff(COLOR_PAIR(3));
+                    break;
+                case 'd':
+                    init_pair(4,COLOR_MAGENTA,COLOR_RED);
+                    attron(COLOR_PAIR(4));
+                    printw("%c",slot); // Imprime en pantalla ncurses
+                    attroff(COLOR_PAIR(4));
+                    break;
+                case 'z':
+                    init_pair(5,COLOR_GREEN,COLOR_BLUE);
+                    attron(COLOR_PAIR(5));
+                    printw("%c",slot); // Imprime en pantalla ncurses
+                    attroff(COLOR_PAIR(5));
+                    break;
+                case 'E':
+                    init_pair(6, COLOR_RED, COLOR_BLACK);
+                    attron(COLOR_PAIR(6));
+                    printw("%c",slot); // Imprime en pantalla ncurses
+                    attroff(COLOR_PAIR(6));
+                    break;
+                case '0':
+                    init_pair(7,COLOR_WHITE,COLOR_BLACK);
+                    attron(COLOR_PAIR(7));
+                    printw("%c",slot); // Imprime en pantalla ncurses
+                    attroff(COLOR_PAIR(7));
+                    break;
+                case '\n':
+                    printw("%c",slot); // Imprime en pantalla ncurses
+                    break;/*
+                default:
+                    printf("Error al imprimir matriz. Caracter inválido.\n\n");
+                    exit(-1);*/
+            }
         }
     }
-    printw("\n"); // IMprime en pantalla ncurses
+    printw("\n"); // Imprime en pantalla ncurses
     refresh(); // Introduce las impresiones a la pantalla ncurses
 }
 
