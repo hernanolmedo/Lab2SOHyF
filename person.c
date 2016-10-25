@@ -7,18 +7,28 @@
 void* personFunc (void* insPerson){ // Puede ser que se decida usar "no_usado" despu�s. Cambiar el nombre en caso de que as� sea.
     person* personPointer=(person*)insPerson;
     int d=0;
+    int d2=0;
     while(1){ // Mientras la persona esta viva
-		pthread_mutex_lock(&mutex);
-		if(dead(personPointer->posX,personPointer->posY)&&d==0){
-		    changePosition(&personPointer->posX,&personPointer->posY,matriz,&personPointer->gun,&personPointer->ammo);
-		    shoot(personPointer->posX,personPointer->posY,matriz,infoMatrix,&personPointer->ammo,&personPointer->gun);
-		}
-		else d=1;
-		pthread_mutex_unlock(&mutex);
-	    pthread_barrier_wait (&barrera);
-		pthread_barrier_wait(&barrera2);
+    		pthread_mutex_lock(&mutex);
+    		if(dead(personPointer->posX,personPointer->posY)&&d==0){
+    		    changePosition(&personPointer->posX,&personPointer->posY,matriz,&personPointer->gun,&personPointer->ammo);
+    		    shoot(personPointer->posX,personPointer->posY,matriz,infoMatrix,&personPointer->ammo,&personPointer->gun);
+    		}
+    		else {
+            d=1;
+            if(infoMatrix[personPointer->posY][personPointer->posX]==3)matriz[personPointer->posY][personPointer->posX]='Z';
+            pthread_mutex_lock(&mutex);
+      		  if(dead(personPointer->posX,personPointer->posY)&&d2==0){
+      		      changePosition(&personPointer->posX,&personPointer->posY,matriz,NULL,NULL);
+      		  }
+      		  else d2=1;
+      			pthread_mutex_unlock(&mutex);
+        }
+    		pthread_mutex_unlock(&mutex);
+    	  pthread_barrier_wait (&barrera);
+    		pthread_barrier_wait(&barrera2);
     }
-	threads--;
-	return 0;
+	  threads--;
+	  return 0;
     // En este punto ya todas las hebras habr�n terminado de hacer lo que ten�an que hacer durante el turno.
 }
