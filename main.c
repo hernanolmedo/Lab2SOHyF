@@ -17,6 +17,8 @@ int ** infoMatrix;
 int threads;
 int turno;
 int ammoPerGun;
+int zombies;
+int people;
 
 void pS(int height,int width,int **matrix){
     int i,j;
@@ -49,8 +51,8 @@ int main(int argc, char *argv[]){
     int* parametros=fgetParameters(archivo); //Se leen los par�metros desde el archivo de entrada.
     int ancho=parametros[0];
     int largo=parametros[1];
-    int zombies=parametros[2];
-    int people=parametros[3];
+    zombies=parametros[2];
+    people=parametros[3];
     ammoPerGun = parametros[4];
     // Verificaciones de la entrada
     if (((ancho<4)&&(largo<3))||((ancho<3)&&(largo<4))) {

@@ -11,7 +11,7 @@ int randomPosition(){
 
 int whoLives(){
     int r = rand()%10;
-    if(r<3) return 0;
+    if(r>1) return 0;
     else return 1;
 }
 
@@ -188,11 +188,14 @@ void shoot(int posX,int posY,char **matrix,int **infoMatrix,int *ammo,int *gun){
           infoMatrix[targetY][targetX]=1;
           matrix[targetY][targetX]='z';
           (*ammo)--;
+          zombies--;
         }
     }
     else{
       infoMatrix[posY][posX]=1;
       matrix[posY][posX]='d';
+      people--;
+      zombies++;
     }
 }
 

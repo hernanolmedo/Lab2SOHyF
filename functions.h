@@ -6,6 +6,8 @@
 extern char** matriz;
 extern int ** infoMatrix;
 extern int ammoPerGun;
+extern int zombies;
+extern int people;
 int randomPosition();
 int whoLives();
 void printScreen(int height,int width,char **matrix,clock_t startTime);
