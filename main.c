@@ -116,9 +116,9 @@ int main(int argc, char *argv[]){
 		    //f(largo,ancho);
         sleep(1);
         turno++;
-        corpses(largo,ancho,matriz,infoMatrix);
         pthread_barrier_wait(&barrera2);
         pthread_barrier_wait(&barrera);
+        corpses(largo,ancho,matriz,infoMatrix);
     	  // En este punto ya todas las hebras habr�n terminado de hacer lo que ten�an que hacer durante el turno.
     }
 	  printScreen(largo,ancho,matriz,startTime);

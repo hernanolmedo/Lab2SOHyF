@@ -14,15 +14,15 @@ void* personFunc (void* insPerson){ // Puede ser que se decida usar "no_usado" d
     		    changePosition(&personPointer->posX,&personPointer->posY,matriz,&personPointer->gun,&personPointer->ammo);
     		    shoot(personPointer->posX,personPointer->posY,matriz,infoMatrix,&personPointer->ammo,&personPointer->gun);
     		}
-    		else {
+    		else { // La persona ha muerto.
             d=1;
             if(infoMatrix[personPointer->posY][personPointer->posX]==3)matriz[personPointer->posY][personPointer->posX]='Z';
-            pthread_mutex_lock(&mutex);
+            //pthread_mutex_lock(&mutex);
       		  if(dead(personPointer->posX,personPointer->posY)&&d2==0){
       		      changePosition(&personPointer->posX,&personPointer->posY,matriz,NULL,NULL);
       		  }
       		  else d2=1;
-      			pthread_mutex_unlock(&mutex);
+      			//pthread_mutex_unlock(&mutex);
         }
     		pthread_mutex_unlock(&mutex);
     	  pthread_barrier_wait (&barrera);
