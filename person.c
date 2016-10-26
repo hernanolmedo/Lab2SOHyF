@@ -24,7 +24,7 @@ void* personFunc (void* insPerson){ // Puede ser que se decida usar "no_usado" d
       		  else if((dead(personPointer->posX,personPointer->posY)==1)&&(d2==0)){
       		      changePosition(&personPointer->posX,&personPointer->posY,matriz,NULL,NULL);
       		  }
-      		  else d2=1;
+      		  else if(matriz[personPointer->posY][personPointer->posX]=='z') d2=1;
       			//pthread_mutex_unlock(&mutex);
         }
     		pthread_mutex_unlock(&mutex);
