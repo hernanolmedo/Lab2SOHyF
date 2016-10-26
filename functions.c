@@ -184,14 +184,16 @@ void shoot(int posX,int posY,char **matrix,int **infoMatrix,int *ammo,int *gun){
     else if(matrix[posY+1][posX-1]=='Z'){targetY=posY-1; targetX=posX;}
     else return;
 	  if(whoLives()==0){
-        if((*gun)==1){
+        if(((*gun)==1)&&((*ammo)>0)){
           infoMatrix[targetY][targetX]=1;
           matrix[targetY][targetX]='z';
           (*ammo)--;
         }
     }
-    else infoMatrix[posY][posX]=1;
-    matrix[posY][posX]='d';
+    else{
+      infoMatrix[posY][posX]=1;
+      matrix[posY][posX]='d';
+    }
 }
 
 int dead(int posX,int posY){
@@ -203,11 +205,11 @@ void corpses(int height,int width,char **matrix,int **infoMatrix){
     int i,j;
     for(i=0;i<height;i++){
         for(j=0;j<width;j++){
-        	if(infoMatrix[i][j]==1) infoMatrix[i][j]=2;
+          	if(infoMatrix[i][j]==1) infoMatrix[i][j]=2;
             else if(infoMatrix[i][j]==2) infoMatrix[i][j]=3;
             else if(infoMatrix[i][j]==3){
-            	matrix[i][j]='0';
-            	infoMatrix[i][j]=0;
+                if(matrix[i][j]=='z') matrix[i][j]='0';
+                infoMatrix[i][j]=0;
             }
         }
     }

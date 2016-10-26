@@ -21,12 +21,13 @@ int ammoPerGun;
 void pS(int height,int width,int **matrix){
     int i,j;
     for(i=0;i<height;i++){
-        for(j=0;j<=width;j++){
-            printf("%d",matrix[i][j]);
+        for(j=0;j<width;j++){
+            printw("%d",matrix[i][j]);
         }
-        printf("\n");
+        printw("\n");
     }
-	printf("\n");
+	printw("\n");
+  refresh();
 }
 
 void f(int height,int width){
@@ -112,13 +113,15 @@ int main(int argc, char *argv[]){
         printw("Personas: %d\n",people);
         printw("Zombies: %d\n",zombies);
         refresh();
-        //pS(largo,ancho,infoMatrix);
-		    //f(largo,ancho);
         sleep(1);
         turno++;
         pthread_barrier_wait(&barrera2);
         pthread_barrier_wait(&barrera);
+        //pS(largo,ancho,infoMatrix);
+        //sleep(3);
         corpses(largo,ancho,matriz,infoMatrix);
+		    //f(largo,ancho);
+
     	  // En este punto ya todas las hebras habr�n terminado de hacer lo que ten�an que hacer durante el turno.
     }
 	  printScreen(largo,ancho,matriz,startTime);
