@@ -51,6 +51,20 @@ int main(int argc, char *argv[]){
     int zombies=parametros[2];
     int people=parametros[3];
     ammoPerGun = parametros[4];
+    // Verificaciones de la entrada
+    if ((ancho<4)||(largo<3)) {
+        printf("Las dimensiones de la matriz no son adecuadas para la simulación. Edite el archivo de entrada.");
+        return -1; // Se verifica que las dimensiones de la matriz sean los mínimos permitidos
+    }
+    if ((ancho<3)||(largo<4)){
+        printf("Las dimensiones de la matriz no son adecuadas para la simulación. Edite el archivo de entrada.");
+        return -1; // para poder llevar a cabo la simulación.
+    }
+    if ((zombies<1)||(people<1)){
+        printf("La cantidad de zombies o de personas debe ser superior a 0. Edite el archivo de entrada.");
+        return -1; // para poder llevar a cabo la simulación.
+    }
+  
     threads = zombies + people + 1;
     person peopleArray[people]; // Se crean arreglos en donde se almacenan estructuras person y zombie.
     zombie zombieArray[zombies];
