@@ -15,15 +15,14 @@ int whoLives(){
     else return 1;
 }
 
-void printScreen(int height,int width,char **matrix,clock_t startTime){
+void printScreen(int height,int width,char **matrix){
     clear(); // Se limpia la pantalla ncurses
     int i,j;
     char slot;
     char timeString[6];
-    struct tm timeStruct;
-    clock_t elapsedTime=clock()-startTime;
-    int timeSeconds=(int)(elapsedTime*1000/CLOCKS_PER_SEC); // Se termina de calcular el tiempo transcurrido en segundos.
-    int timeMinutes=(int)timeSeconds/60;
+    struct tm timeStruct; // Se crea una estructura tm para tener el formato MM:SS que será impreso después.
+    int timeSeconds=turno; // Se termina de calcular el tiempo transcurrido en segundos.
+    int timeMinutes=(int)turno/60;
     int remainingSeconds;
     if(timeMinutes!=0) remainingSeconds=(int)timeSeconds%(timeMinutes*60);
     else remainingSeconds=timeSeconds;
@@ -93,6 +92,8 @@ void printScreen(int height,int width,char **matrix,clock_t startTime){
     }
     printw("\n"); // Imprime en pantalla ncurses
     printw("Tiempo: %s\n",timeString);
+    printw("Personas: %d\n",people);
+    printw("Zombies: %d\n",zombies);
     refresh(); // Introduce las impresiones a la pantalla ncurses
 }
 

@@ -4,7 +4,6 @@
 #include "person.h"
 #include "zombie.h"
 
-
 /*
 fgetParameters
     Argumentos

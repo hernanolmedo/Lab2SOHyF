@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <ncurses.h>
-#include <time.h>
 #include "readFile.h"
 #include "functions.h"
 #include "zombie.h"
@@ -28,20 +27,20 @@ void pS(int height,int width,int **matrix){
         }
         printw("\n");
     }
-	printw("\n");
-  refresh();
+	  printw("\n");
+    refresh();
 }
 
 void f(int height,int width){
     int i,j;
-	printf("\n\n");
+	  printf("\n\n");
     for(i=0;i<height;i++){
         for(j=0;j<width;j++){
             printf("[%d][%d]  ",i,j);
         }
 		printf("\n\n");
     }
-	printf("\n\n");
+	  printf("\n\n");
 }
 
 int main(int argc, char *argv[]){
@@ -75,16 +74,13 @@ int main(int argc, char *argv[]){
         return -1;
     }
     start_color(); // Se activa el modo color del terminal.
-    clock_t startTime = clock(); // Se guarda el tiempo de inicio de la partida
-    printScreen(largo,ancho,matriz,startTime); //Se imprime la matriz.
-    printw("Personas: %d\n",people);
-    printw("Zombies: %d\n",zombies);
-    refresh();
+    //clock_t startTime = clock(); // Se guarda el tiempo de inicio de la partida
+    printScreen(largo,ancho,matriz); //Se imprime la matriz.
 
 	  int i,j; // Contadores para prop�sitos varios
 
+	  srand(time(NULL)); // Se crea un número al azar para su uso posterior en algoritmos de movimiento.
 
-	srand(time(NULL));
 	  // Se crea una matriz de igual tama�o que matriz para realizar verificaciones entre turnos durante la partida.
 	  infoMatrix = (int**)malloc(sizeof(int*)*largo);
     for(i=0;i<largo;i++){
@@ -111,10 +107,7 @@ int main(int argc, char *argv[]){
 	  pthread_barrier_wait(&barrera);
     sleep(1); // Se hace una espera de 1 seg al iniciar la partida para apreciar el estado inicial de la pantalla
     while(gameOver(largo,ancho,matriz,zombies,zombieArray)){
-        printScreen(largo,ancho,matriz,startTime);
-        printw("Personas: %d\n",people);
-        printw("Zombies: %d\n",zombies);
-        refresh();
+        printScreen(largo,ancho,matriz);
         sleep(1);
         turno++;
         pthread_barrier_wait(&barrera2);
@@ -126,9 +119,7 @@ int main(int argc, char *argv[]){
 
     	  // En este punto ya todas las hebras habr�n terminado de hacer lo que ten�an que hacer durante el turno.
     }
-	  printScreen(largo,ancho,matriz,startTime);
-    printw("Personas: %d\n",people);
-    printw("Zombies: %d\n",zombies);
+	  printScreen(largo,ancho,matriz);
 	  printw("GAME OVER\n\n");
     printw("Presione una tecla para salir...");
     refresh();
