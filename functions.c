@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <ncurses.h>
+#include <unistd.h>
 #include "functions.h"
 
 int randomPosition(){
@@ -11,7 +12,7 @@ int randomPosition(){
 
 int whoLives(){
     int r = rand()%10;
-    if(r>1) return 0;
+    if(r<3) return 0;
     else return 1;
 }
 
@@ -115,16 +116,17 @@ void changePosition(int *posrX,int *posrY,char **matrix,int *gun,int *ammo){
     matrix[posY][posX]='0';
     int g=0;//flag arma alrededor
     if(matrix[newY][newX]=='P'){
-        if(matrix[newY-1][newX-1]=='G') {g=1; matrix[newY-1][newX-1]='0';}
-        else if(matrix[newY-1][newX]=='G') {g=1; matrix[newY-1][newX]='0';}
-        else if(matrix[newY-1][newX+1]=='G') {g=1; matrix[newY-1][newX+1]='0';}
-        else if(matrix[newY][newX-1]=='G') {g=1; matrix[newY][newX-1]='0';}
-        else if(matrix[newY][newX+1]=='G') {g=1; matrix[newY][newX+1]='0';}
-        else if(matrix[newY+1][newX-1]=='G') {g=1; matrix[newY+1][newX-1]='0';}
-        else if(matrix[newY+1][newX]=='G') {g=1; matrix[newY+1][newX]='0';}
-        else if(matrix[newY+1][newX+1]=='G') {g=1; matrix[newY+1][newX+1]='0';}
+        if(matrix[newY-1][newX-1]=='G') {g=1; posY=newY-1; posX=newX-1;}
+        else if(matrix[newY-1][newX]=='G') {g=1; posY=newY-1; posX=newX;}
+        else if(matrix[newY-1][newX+1]=='G') {g=1; posY=newY-1; posX=newX+1;}
+        else if(matrix[newY][newX-1]=='G') {g=1; posY=newY; posX=newX-1;}
+        else if(matrix[newY][newX+1]=='G') {g=1; posY=newY; posX=newX+1;}
+        else if(matrix[newY+1][newX-1]=='G') {g=1; posY=newY+1; posX=newX-1;}
+        else if(matrix[newY+1][newX]=='G') {g=1; posY=newY+1; posX=newX;}
+        else if(matrix[newY+1][newX+1]=='G') {g=1; posY=newY+1; posX=newX+1;}
     }
-    if(g==1){
+    if((g==1)&&((*gun)==0)){
+		matrix[posY][posX]='0';
         (*gun)=1;
         (*ammo)=(*ammo)+ammoPerGun;
     }
@@ -176,13 +178,13 @@ int gameOver(int height,int width,char **matrix,int nzombies,zombie *zombieArray
 void shoot(int posX,int posY,char **matrix,int **infoMatrix,int *ammo,int *gun){
 	int targetX,targetY;
     if(matrix[posY-1][posX]=='Z'){targetY=posY-1; targetX=posX;}
-    else if(matrix[posY+1][posX]=='Z'){targetY=posY-1; targetX=posX;}
-    else if(matrix[posY][posX+1]=='Z'){targetY=posY-1; targetX=posX;}
-    else if(matrix[posY][posX-1]=='Z'){targetY=posY-1; targetX=posX;}
-    else if(matrix[posY-1][posX+1]=='Z'){targetY=posY-1; targetX=posX;}
-    else if(matrix[posY-1][posX-1]=='Z'){targetY=posY-1; targetX=posX;}
-    else if(matrix[posY+1][posX+1]=='Z'){targetY=posY-1; targetX=posX;}
-    else if(matrix[posY+1][posX-1]=='Z'){targetY=posY-1; targetX=posX;}
+    else if(matrix[posY+1][posX]=='Z'){targetY=posY+1; targetX=posX;}
+    else if(matrix[posY][posX+1]=='Z'){targetY=posY; targetX=posX+1;}
+    else if(matrix[posY][posX-1]=='Z'){targetY=posY; targetX=posX-1;}
+    else if(matrix[posY-1][posX+1]=='Z'){targetY=posY-1; targetX=posX+1;}
+    else if(matrix[posY-1][posX-1]=='Z'){targetY=posY-1; targetX=posX-1;}
+    else if(matrix[posY+1][posX+1]=='Z'){targetY=posY+1; targetX=posX+1;}
+    else if(matrix[posY+1][posX-1]=='Z'){targetY=posY+1; targetX=posX-1;}
     else return;
 	  if(whoLives()==0){
         if(((*gun)==1)&&((*ammo)>0)){
