@@ -6,4 +6,10 @@ Guía GIT: http://rogerdudler.github.io/git-guide/index.es.html
 
 Organización archivos: http://gribblelab.org/CBootcamp/12_Compiling_linking_Makefile_header_files.html
 
-Guia MAKEFILE: http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/
+Guia MAKEFILE: 
+
+http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/
+
+y
+
+http://iie.fing.edu.uy/~vagonbar/gcc-make/make.htm
