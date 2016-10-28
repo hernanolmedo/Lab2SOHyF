@@ -19,30 +19,6 @@ int ammoPerGun;
 int zombies;
 int people;
 
-void pS(int height,int width,int **matrix){
-    int i,j;
-    for(i=0;i<height;i++){
-        for(j=0;j<width;j++){
-            printw("%d",matrix[i][j]);
-        }
-        printw("\n");
-    }
-	  printw("\n");
-    refresh();
-}
-
-void f(int height,int width){
-    int i,j;
-	  printf("\n\n");
-    for(i=0;i<height;i++){
-        for(j=0;j<width;j++){
-            printf("[%d][%d]  ",i,j);
-        }
-		printf("\n\n");
-    }
-	  printf("\n\n");
-}
-
 int main(int argc, char *argv[]){
     //Lectura e impresi�n de la matriz (tablero de la simulaci�n)
     turno=0;
@@ -50,6 +26,7 @@ int main(int argc, char *argv[]){
     int* parametros=fgetParameters(archivo); //Se leen los par�metros desde el archivo de entrada.
     int ancho=parametros[0];
     int largo=parametros[1];
+	int win;
     zombies=parametros[2];
     people=parametros[3];
     ammoPerGun = parametros[4];
@@ -74,7 +51,6 @@ int main(int argc, char *argv[]){
         return -1;
     }
     start_color(); // Se activa el modo color del terminal.
-    //clock_t startTime = clock(); // Se guarda el tiempo de inicio de la partida
     printScreen(largo,ancho,matriz); //Se imprime la matriz.
 
 	  int i,j; // Contadores para prop�sitos varios
@@ -103,24 +79,21 @@ int main(int argc, char *argv[]){
     - Posiblemente, la implementaci�n del sistema de turnos.
     Nota: Se debe llevar la cuenta de los threads creados para poder usar barrier correctamente.
     */
-    //f(largo,ancho);
 	  pthread_barrier_wait(&barrera);
     sleep(1); // Se hace una espera de 1 seg al iniciar la partida para apreciar el estado inicial de la pantalla
-    while(gameOver(largo,ancho,matriz,zombies,zombieArray)){
+    while(!(win=gameOver(largo,ancho,matriz,zombies,zombieArray))){
         printScreen(largo,ancho,matriz);
         sleep(1);
         turno++;
         pthread_barrier_wait(&barrera2);
         pthread_barrier_wait(&barrera);
-        //pS(largo,ancho,infoMatrix);
-        //sleep(3);
         corpses(largo,ancho,matriz,infoMatrix);
-		    //f(largo,ancho);
-
     	  // En este punto ya todas las hebras habr�n terminado de hacer lo que ten�an que hacer durante el turno.
     }
 	  printScreen(largo,ancho,matriz);
-	  printw("GAME OVER\n\n");
+	  printw("GAME OVER. Ganararon ");
+	if(win==1) printw("las personas\n\n");
+	else printw("los zombies\n\n");
     printw("Presione una tecla para salir...");
     refresh();
     getch();

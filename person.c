@@ -7,6 +7,7 @@
 void* personFunc (void* insPerson){ // Puede ser que se decida usar "no_usado" despu�s. Cambiar el nombre en caso de que as� sea.
     person* personPointer=(person*)insPerson;
     int d=0; // Flag de si murio una vez.
+	int d1=0; // Fue convertida
     int d2=0; // Flag de si murió de nuevo (como zombie).
     while(1){ // Mientras la persona esta viva
     		pthread_mutex_lock(&mutex);
@@ -15,20 +16,18 @@ void* personFunc (void* insPerson){ // Puede ser que se decida usar "no_usado" d
     		    shoot(personPointer->posX,personPointer->posY,matriz,infoMatrix,&personPointer->ammo,&personPointer->gun);
     		}
     		else { // La persona ha muerto.
-            d=1;
-            if(infoMatrix[personPointer->posY][personPointer->posX]==3){
-              matriz[personPointer->posY][personPointer->posX]='Z';
-              //infoMatrix[personPointer->posY][personPointer->posX]=0;
-            }
-            //pthread_mutex_lock(&mutex);
-      		  else if((dead(personPointer->posX,personPointer->posY)==1)&&(d2==0)){
-      		      changePosition(&personPointer->posX,&personPointer->posY,matriz,NULL,NULL);
-      		  }
-      		  else if(matriz[personPointer->posY][personPointer->posX]=='z') d2=1;
-      			//pthread_mutex_unlock(&mutex);
-        }
+		        d=1;
+		        if((infoMatrix[personPointer->posY][personPointer->posX]==3)&&(d1==0)){
+					d1=1;
+		          matriz[personPointer->posY][personPointer->posX]='Z';
+		        }
+		  		  else if((dead(personPointer->posX,personPointer->posY)==1)&&(d2==0)){
+		  		      changePosition(&personPointer->posX,&personPointer->posY,matriz,NULL,NULL);
+		  		  }
+		  		  else if(matriz[personPointer->posY][personPointer->posX]=='z') d2=1;
+        	}
     		pthread_mutex_unlock(&mutex);
-    	  pthread_barrier_wait (&barrera);
+    	  	pthread_barrier_wait (&barrera);
     		pthread_barrier_wait(&barrera2);
     }
 	  threads--;

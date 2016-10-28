@@ -12,7 +12,7 @@ int randomPosition(){
 
 int whoLives(){
     int r = rand()%10;
-    if(r<3) return 0;
+    if(r>3) return 0;
     else return 1;
 }
 
@@ -99,21 +99,23 @@ void printScreen(int height,int width,char **matrix){
 }
 
 void changePosition(int *posrX,int *posrY,char **matrix,int *gun,int *ammo){
-    int number=0,result=0,newX,newY,posX=*posrX,posY=*posrY;
+    int number=0,result=0,newX,newY,posX=*posrX,posY=*posrY,flagMove=0;
     while(result==0){
         number=randomPosition();
         if(number==0) result=positionCheker(newX=posX-1,newY=posY-1,matrix);
         else if(number==1) result=positionCheker(newX=posX,newY=posY-1,matrix);
         else if(number==2) result=positionCheker(newX=posX+1,newY=posY-1,matrix);
         else if(number==3) result=positionCheker(newX=posX-1,newY=posY,matrix);
-        else if(number==4) {result=1; return;}
+        else if(number==4) {result=1; newX=posX; newY=posY; flagMove=1;}
         else if(number==5) result=positionCheker(newX=posX+1,newY=posY,matrix);
         else if(number==6) result=positionCheker(newX=posX-1,newY=posY+1,matrix);
         else if(number==7) result=positionCheker(newX=posX,newY=posY+1,matrix);
         else if(number==8) result=positionCheker(newX=posX+1,newY=posY+1,matrix);
     }
-    matrix[newY][newX]=matrix[posY][posX];
-    matrix[posY][posX]='0';
+	if(flagMove==0){
+		matrix[newY][newX]=matrix[posY][posX];
+		matrix[posY][posX]='0';
+	}
     int g=0;//flag arma alrededor
     if(matrix[newY][newX]=='P'){
         if(matrix[newY-1][newX-1]=='G') {g=1; posY=newY-1; posX=newX-1;}
@@ -170,8 +172,11 @@ int gameOver(int height,int width,char **matrix,int nzombies,zombie *zombieArray
     		act=1;
     	}
     }
-    if((act==0&&countZ==0)||countP==0) return 0;
-    return 1;
+    if(act==0){
+		if(countZ==0) return 1;// ganan las personas
+		else if(countP==0) return 2;// ganan los zombies
+	}
+    return 0;
 }
 
 //Verificación en orden N S E W NE NW SE SW
