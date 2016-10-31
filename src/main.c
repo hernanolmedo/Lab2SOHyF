@@ -9,15 +9,15 @@
 #include "person.h"
 
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-pthread_barrier_t barrera; // Se declara un objeto barrier (barrera).
-pthread_barrier_t barrera2;
-char** matriz;
-int ** infoMatrix;
-int threads;
-int turno;
-int ammoPerGun;
-int zombies;
-int people;
+pthread_barrier_t barrera; // Esta primera barrera sirve para que las hebras se sincronicen por turnos .
+pthread_barrier_t barrera2; // Esta otra barrera sirve para que la hebra principal realice las impresiones cada 1 seg, entre turnos.
+char** matriz; // Matriz en donde se almacena el tablero. 
+int ** infoMatrix; // Matríz para manejar las unidades que están vivas y muertas y por cuando tiempo lo han estado.
+int threads; // Catidad de hebras.
+int turno; // Se lleva la cuenta de los turnos.
+int ammoPerGun; // Balas por pistola.
+int zombies; // Cantidad de zombies.
+int people; // Cantidad de personas.
 
 int main(int argc, char *argv[]){
     //Lectura e impresi�n de la matriz (tablero de la simulaci�n)
@@ -40,12 +40,12 @@ int main(int argc, char *argv[]){
         return -1; // para poder llevar a cabo la simulación.
     }
 
-    threads = zombies + people + 1;
+    threads = zombies + people + 1; // Numero de zombies + numero de personas + 1 hebra principal
     person peopleArray[people]; // Se crean arreglos en donde se almacenan estructuras person y zombie.
     zombie zombieArray[zombies];
     matriz=fgetMatrix(archivo,largo,ancho,peopleArray,zombieArray,ammoPerGun,zombies); //Se crea la matriz con los datos del archivo de entrada.
     initscr(); // Se inicia el modo ncurses
-    if(has_colors() == FALSE){
+    if(has_colors() == FALSE){ // Se verifica si el terminal soporta colores
         endwin();
         printf("ERROR: Su terminal no soporta colores.\n");
         return -1;
@@ -73,30 +73,24 @@ int main(int argc, char *argv[]){
     for(i=0;i<zombies;i++) pthread_create (&zombieThreads[i], NULL, zombieFunc, &zombieArray[i]);
     for(i=0;i<people;i++) pthread_create (&personThreads[i], NULL, personFunc, &peopleArray[i]);
 
-    /*
-    C�digo por escribir...
-    - Creaci�n de los threads.
-    - Posiblemente, la implementaci�n del sistema de turnos.
-    Nota: Se debe llevar la cuenta de los threads creados para poder usar barrier correctamente.
-    */
-	  pthread_barrier_wait(&barrera);
+	  pthread_barrier_wait(&barrera); // Se termina el primer turno
     sleep(1); // Se hace una espera de 1 seg al iniciar la partida para apreciar el estado inicial de la pantalla
-    while(!(win=gameOver(largo,ancho,matriz,zombies,zombieArray))){
-        printScreen(largo,ancho,matriz);
-        sleep(1);
-        turno++;
-        pthread_barrier_wait(&barrera2);
-        pthread_barrier_wait(&barrera);
-        corpses(largo,ancho,matriz,infoMatrix);
+    while(!(win=gameOver(largo,ancho,matriz,zombies,zombieArray))){ // Ciclo principal de la simulacion
+        printScreen(largo,ancho,matriz); // Se imprime la pantalla...
+        sleep(1); // cada aprox. 1 seg
+        turno++; // se aumenta el turno
+        pthread_barrier_wait(&barrera2); // Aqui termina el entre turno.
+        pthread_barrier_wait(&barrera); // Comienza un nuevo turno
+        corpses(largo,ancho,matriz,infoMatrix); // Se verivida infoMatrix para ver si hay muertos y cuanto tiempo lo han estado
     	  // En este punto ya todas las hebras habr�n terminado de hacer lo que ten�an que hacer durante el turno.
     }
-	  printScreen(largo,ancho,matriz);
+	  printScreen(largo,ancho,matriz); // Se imprime la pantalla por ultima vez.
 	  printw("GAME OVER. Ganararon ");
 	if(win==1) printw("las personas\n\n");
 	else printw("los zombies\n\n");
-    printw("Presione una tecla para salir...");
+    printw("Presione una tecla para salir..."); 
     refresh();
     getch();
-    endwin();
-    return 0;
+    endwin(); // Se cierra el modo ncurses en repuesta a que el usuario presione una tecla.
+    return 0; // Se termina el programa.
 }
