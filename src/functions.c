@@ -5,17 +5,26 @@
 #include <unistd.h>
 #include "functions.h"
 
+//Descripcion: Entrega una posición de las 8 casillas disponibles además de la casilla actual
+//Argumentos: Sin
+//Retorna: número del 0 al 8 (9 posibles casillas)
 int randomPosition(){
     int r = rand()%9;
     return r;
 }
 
+//Descripcion: Dado que de a la persona 30% de probabilidad de sobrevivir y 70% al zombie
+//Argumentos: Sin
+//Retorna: 0 si vive la persona, 1 si vive el zombie
 int whoLives(){
     int r = rand()%10;
-    if(r>3) return 0;
+    if(r<3) return 0;
     else return 1;
 }
 
+//Descripcion: Imprime la pantalla
+//Argumentos: altura, ancho, matriz
+//Retorna: Nada
 void printScreen(int height,int width,char **matrix){
     clear(); // Se limpia la pantalla ncurses
     int i,j;
@@ -98,6 +107,9 @@ void printScreen(int height,int width,char **matrix){
     refresh(); // Introduce las impresiones a la pantalla ncurses
 }
 
+//Descripcion: Verifica una posicion valida donde moverse y si hay un arma para la persona la toma
+//Argumentos: posiciones actuales, matriz, si tiene arma y municiones
+//Retorna: Nada
 void changePosition(int *posrX,int *posrY,char **matrix,int *gun,int *ammo){
     int number=0,result=0,newX,newY,posX=*posrX,posY=*posrY,flagMove=0;
     while(result==0){
@@ -135,7 +147,10 @@ void changePosition(int *posrX,int *posrY,char **matrix,int *gun,int *ammo){
 	  *posrX=newX;
 	  *posrY=newY;
 }
-//entrada zombie
+
+//Descripcion: Primer movimiento de los zombies desde la entrada
+//Argumentos: Posición inicial zombies, matriz
+//Retorna: 1 si logra moverse, 0 si no
 int m(int *posrX,int *posrY,char **matrix){
     int number=0,result=0,newX,newY,posX=*posrX,posY=*posrY;
     while(result==0){
@@ -154,11 +169,17 @@ int m(int *posrX,int *posrY,char **matrix){
 	return 1;
 }
 
+//Descripcion: Verifica que una posición este libre '0'
+//Argumentos: Posición a verificar y matriz
+//Retorna: 1 si es posible, 0 cc
 int positionCheker(int posX,int posY,char **matrix){
     if(matrix[posY][posX]=='0') return 1;
     return 0;
 }
 
+//Descripcion: Analiza si no quedan personas (ganan zombies) o biceversa
+//Argumentos: Altura, ancho, matriz, numero de zombies, array de estructura de zombies
+//Retorna: 0 si aun no termina, 1 si ganan personas y 2 si lo hacen los zombies
 int gameOver(int height,int width,char **matrix,int nzombies,zombie *zombieArray){
     int i,j,countP=0,countZ=0,act=0;
     for(i=0;i<height;i++){
@@ -179,7 +200,9 @@ int gameOver(int height,int width,char **matrix,int nzombies,zombie *zombieArray
     return 0;
 }
 
-//Verificación en orden N S E W NE NW SE SW
+//Descripcion: Verifica si a la posicion donde se mueve la persona hay un zombie y decide quien gana
+//Argumentos: Posicion persona, matriz, infomatrix (estado cadaveres), municiones, arma
+//Retorna: Nada
 void shoot(int posX,int posY,char **matrix,int **infoMatrix,int *ammo,int *gun){
 	int targetX,targetY;
     if(matrix[posY-1][posX]=='Z'){targetY=posY-1; targetX=posX;}
@@ -207,11 +230,17 @@ void shoot(int posX,int posY,char **matrix,int **infoMatrix,int *ammo,int *gun){
     }
 }
 
+//Descripcion: Analiza si el ser esta muerto, si la posicion es 0 no lo esta
+//Argumentos: Posicion actual del ser
+//Retorna: 1 si esta vivo, 0 si no
 int dead(int posX,int posY){
 	if(infoMatrix[posY][posX]==0) return 1;
 	return 0;
 }
 
+//Descripcion: Analiza el estado de los cadaveres, los deteriora hasta que desaparecen o se convierten
+//Argumentos: Datos matriz e infoMatrix
+//Retorna: Nada
 void corpses(int height,int width,char **matrix,int **infoMatrix){
     int i,j;
     for(i=0;i<height;i++){
